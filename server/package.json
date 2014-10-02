@@ -1,0 +1,15 @@
+{
+  "name": "NewClassSite",
+  "version": "0.0.0",
+  "description": "Site for my class",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anton Koloff",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.9.5",
+    "mongoose": "^3.8.17"
+  }
+}
