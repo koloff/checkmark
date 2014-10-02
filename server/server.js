@@ -2,13 +2,19 @@ var express = require('express'),
     mongoose = require('mongoose');
 
 var env = process.env.NODE_ENV || 'development';
-var PORT = 3399;
+var PORT = process.env.PORT || 3377;
 
 var app = express();
 
 app.use(express.static(__dirname + '/../public'));
 
-mongoose.connect('mongodb://localhost/classsite');
+
+if (env === 'development') {
+    mongoose.connect('mongodb://localhost/classsite');
+} else {
+    mongoose.connect('mongodb://tzar:tzarqnaklasa@ds063909.mongolab.com:63909/pmg-class');
+}
+
 var db = mongoose.connection;
 
 db.once('open', function(err) {
@@ -49,3 +55,4 @@ Message.remove({}).exec(function(err) {
 
 app.listen(PORT);
 console.log('Server running on port: ' + PORT);
+console.log(env);
