@@ -1,6 +1,6 @@
 var classbook = angular
 
-.module('classbook', ['ui.router'])
+.module('classbook', ['ngResource', 'ui.router'])
 
 .config(['$stateProvider',
     function($stateProvider) {
@@ -9,19 +9,11 @@ var classbook = angular
                 url: '/login',
                 templateUrl: 'src/app/classbook/classbook-login.tpl.html',
                 controller: 'ClassbookLoginCtrl'
+            })
+            .state('usersList', {
+                url: '/users',
+                templateUrl: 'src/app/classbook/admin/users-list.tpl.html',
+                controller: 'UsersListCtrl'
             });
-    }
-])
-
-.controller('ClassbookLoginCtrl', ['$scope',
-
-    function($scope) {
-        var numberRegEx = new RegExp('/^\\d{1,2}$/'),
-            passwordRegEx = new RegExp('\\d\\d');
-
-        $scope.patterns = {
-            number: numberRegEx,
-            password: passwordRegEx
-        };
     }
 ]);

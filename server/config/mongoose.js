@@ -1,6 +1,5 @@
 var mongoose = require('mongoose'),
-    passport = require('passport'),
-    LocalPassport = require('passport-local');
+    crypto = require('crypto');
 
 module.exports = function(config) {
     mongoose.connect(config.db);
@@ -20,11 +19,22 @@ module.exports = function(config) {
     });
 
     var userSchema = mongoose.Schema({
-        number: Number
-        //fname: String,
-        //lname: String
-        // salt: String,
-        // hashPassword: String
+        number: Number,
+        fname: String,
+        lname: String,
+        salt: String,
+        hashPassword: String,
+        roles: [String]
+    });
+
+    userSchema.method({
+        authenticate: function(password) {
+            if (generateHashedPassword(password, this.salt) === this.hashPassword) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     });
 
     var User = mongoose.model('User', userSchema);
@@ -35,63 +45,60 @@ module.exports = function(config) {
             return;
         }
 
+        //User.remove({}).exec(function() {
         if (collection.length === 0) {
+
+            var salt, hashPass;
+
+            salt = generateSalt();
+            hashPass = generateHashedPassword('Anton', salt);
             User.create({
-                number: 1
+                number: 1,
+                fname: 'Anton',
+                lname: 'Koloff',
+                salt: salt,
+                hashPassword: hashPass,
+                roles: ['admin']
             });
+
+            salt = generateSalt();
+            hashPass = generateHashedPassword('Pesho', salt);
             User.create({
-                number: 3
+                number: 3,
+                fname: 'Pesho',
+                lname: 'Peshovski',
+                salt: salt,
+                hashPassword: hashPass,
+                roles: ['moderator']
             });
+
+            salt = generateSalt();
+            hashPass = generateHashedPassword('Ivan', salt);
             User.create({
-                number: 21
+                number: 21,
+                fname: 'Ivan',
+                lname: 'Georgiev',
+                salt: salt,
+                hashPassword: hashPass
             });
 
             console.log('Users added to database!');
         }
+        //});
+
+
     });
 
-    passport.use(new LocalPassport(function(number, password, done) {
-        User.findOne({
-            number: number
-        }).exec(function(err, user) {
-            if (err) {
-                console.log('Error loading user: ' + err);
-                return;
-            }
-
-            if (user) {
-                return done(null, user);
-            } else {
-                return done(null, false);
-            }
-
-        });
-    }));
 
 
-    passport.serializeUser(function(user, done) {
-        if (user) {
-            return done(null, user._id);
-        }
-    });
+    function generateSalt() {
+        return crypto.randomBytes(128).toString('base64');
+    }
 
-    passport.deserializeUser(function(id, done) {
-        User.findOne({
-            _id: id
-        }).exec(function(err, user) {
-            if (err) {
-                console.log('Error loading user: ' + err);
-                return;
-            }
-
-            if (user) {
-                return done(null, user);
-            } else {
-                return done(null, false);
-            }
-
-        });
-    });
+    function generateHashedPassword(pwd, salt) {
+        var hmac = crypto.createHmac('sha1', salt);
+        return hmac.update(pwd).digest('hex');
+    }
 
 
 };

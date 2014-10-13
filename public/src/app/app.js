@@ -2,6 +2,8 @@ var appModule = angular
 
 .module('app', ['ui.router', 'classbook'])
 
+.value('toastr', toastr)
+
 .config(['$stateProvider', '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/home');

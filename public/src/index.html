@@ -3,26 +3,35 @@
     <head>
         <meta charset="UTF-8">
         <title>10 клас</title>
-        <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="src/bootstrap-theme/bootstrap-theme.min.css" />
-        <link rel="stylesheet" href="src/style/main.css" />
+        <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="src/bootstrap-theme/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="vendor/toastr/toastr.css">
+        <link rel="stylesheet" href="src/style/main.css">
     </head>
     <body>
-        <div ng-include="'src/app/header.tpl.html'"></div> 
+        <div ng-controller="ClassbookLoginCtrl" ng-include="'src/app/header.tpl.html'"></div> 
         <div class="container">
             <div ui-view></div>
         </div>
 
         <divng ng-include="'src/app/footer.tpl.html'"></div>
-    
+        
+       
         <script src="vendor/angular/angular.js"></script>
         <script src="vendor/jquery/dist/jquery.js"></script>
+        <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="vendor/toastr/toastr.js"></script>
         <script src="vendor/angular-route/angular-route.js"></script>
         <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="vendor/angular-resource/angular-resource.js"></script>
-        <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
         <script src="src/app/app.js"></script>
+        <script src="src/app/common/notifier.js"></script>
         <script src="src/app/classbook/classbook.js"></script>
+        <script src="src/app/classbook/identity.js"></script>
+        <script src="src/app/classbook/classbook-login-ctrl.js"></script>
+        <script src="src/app/classbook/auth.js"></script>
+        <script src="src/app/classbook/user-resource.js"></script>
+        <script src="src/app/classbook/admin/users-list-ctrl.js"></script>
 
     </body>
 </html>

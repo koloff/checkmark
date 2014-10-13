@@ -18,7 +18,18 @@
                     <li><a href="#/">Галерия</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#/login">Дневник</a></li>
+                    <li ng-hide="identity.isAuthenticated()"><a href="#/login">Дневник</a></li>
+                    <li ng-show="identity.isAuthenticated()" class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                            {{ identity.currentUser.fname + ' '+ identity.currentUser.lname}} 
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="">Дневник</a></li>
+                            <li class="divider"></li>
+                            <li><a href="" ng-click="logOut()">Изход</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
