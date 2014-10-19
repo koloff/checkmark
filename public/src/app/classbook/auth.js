@@ -1,5 +1,5 @@
-classbook.factory('auth', ['$http', '$q', 'identity', 'UserResource',
-    function($http, $q, identity, UserResource) {
+classbook.factory('auth', ['$http', '$q', 'identity', 'UserResource', '$cookieStore',
+    function($http, $q, identity, UserResource, $cookieStore) {
         return {
 
             login: function(user) {
@@ -7,8 +7,7 @@ classbook.factory('auth', ['$http', '$q', 'identity', 'UserResource',
 
                 $http.post('/login', user).success(function(response) {
                     if (response.success) {
-                        var user = new UserResource();
-                        angular.extend(user, response.user);
+                        var user = response.user;
                         identity.currentUser = user;
                         deferred.resolve(true);
                     } else {
@@ -20,6 +19,9 @@ classbook.factory('auth', ['$http', '$q', 'identity', 'UserResource',
             },
 
             logout: function() {
+
+                $cookieStore.remove('user');
+
                 var deferred = $q.defer();
 
                 $http.post('/logout').success(function(response) {
@@ -32,6 +34,22 @@ classbook.factory('auth', ['$http', '$q', 'identity', 'UserResource',
                 });
 
                 return deferred.promise;
+            },
+
+            isAuthenticated: function() {
+                if (identity.isAuthenticated()) {
+                    return true;
+                } else {
+                    return $q.reject('not-authenticated');
+                }
+            },
+
+            isAuthorizedFor: function(role) {
+                if (identity.isInRole(role)) {
+                    return true;
+                } else {
+                    return $q.reject('not-authorized');
+                }
             }
 
         };

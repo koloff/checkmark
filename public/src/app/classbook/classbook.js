@@ -1,6 +1,6 @@
 var classbook = angular
 
-.module('classbook', ['ngResource', 'ui.router'])
+.module('classbook', ['ngResource', 'ui.router', 'ngCookies'])
 
 .config(['$stateProvider',
     function($stateProvider) {
@@ -13,7 +13,14 @@ var classbook = angular
             .state('usersList', {
                 url: '/users',
                 templateUrl: 'src/app/classbook/admin/users-list.tpl.html',
-                controller: 'UsersListCtrl'
+                controller: 'UsersListCtrl',
+                resolve: {
+                    admin: ['auth',
+                        function(auth) {
+                            return auth.isAuthorizedFor('admin');
+                        }
+                    ]
+                }
             });
     }
 ]);

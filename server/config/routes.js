@@ -3,6 +3,11 @@ var auth = require('./auth'),
 
 module.exports = function(app, config) {
     app.get('/', function(req, res) {
+        if (req.user) {
+            res.cookie('user', JSON.stringify(req.user.userInfo));
+        }
+
+        //res.render(config.rootPath + '/public/src/index.html');
         res.sendFile(config.rootPath + '/public/src/index.html');
     });
 

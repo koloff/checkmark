@@ -5,6 +5,8 @@ var express = require('express'),
     passport = require('passport');
 
 module.exports = function(app, config) {
+    //app.engine('html');
+    //app.set('view engine', 'html');
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
@@ -14,7 +16,6 @@ module.exports = function(app, config) {
         secret: 'pmg10a',
         resave: true,
         saveUninitialized: true
-
     }));
 
     app.use(passport.initialize());

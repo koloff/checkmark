@@ -26,6 +26,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="">Дневник</a></li>
+                            <li ng-show="identity.isInRole('admin')"><a href="#/users">Потребители</a></li>
                             <li class="divider"></li>
                             <li><a href="" ng-click="logOut()">Изход</a></li>
                         </ul>

@@ -19,7 +19,7 @@ module.exports = {
                 }
                 res.send({
                     success: true,
-                    user: user
+                    user: user.userInfo
                 });
             });
         });

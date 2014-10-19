@@ -37,6 +37,16 @@ module.exports = function(config) {
         }
     });
 
+    userSchema
+        .virtual('userInfo')
+        .get(function() {
+            return {
+                number: this.number,
+                fname: this.fname,
+                roles: this.roles
+            };
+        });
+
     var User = mongoose.model('User', userSchema);
 
     User.find({}).exec(function(err, collection) {
