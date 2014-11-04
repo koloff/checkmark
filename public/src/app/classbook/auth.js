@@ -2,18 +2,43 @@ classbook.factory('auth', ['$http', '$q', 'identity', 'UserResource', '$cookieSt
     function($http, $q, identity, UserResource, $cookieStore) {
         return {
 
-            login: function(user) {
+            signup: function(user) {
                 var deferred = $q.defer();
 
-                $http.post('/login', user).success(function(response) {
-                    if (response.success) {
-                        var user = response.user;
-                        identity.currentUser = user;
-                        deferred.resolve(true);
-                    } else {
-                        deferred.resolve(false);
+                UserResource.save(user).$promise.then(
+                    function(response) {
+                console.log(response);
+                        if (response.success) {
+                            deferred.resolve(response);
+                        } else {
+                            deferred.reject(response);
+                        }
+                    },
+                    function(error) {
+                        console.dir('rejected from error: ' + error);
+                        deferred.reject(error);
                     }
-                });
+                );
+
+                return deferred.promise;
+            },
+
+            login: function(user) {
+                console.log('logging');
+                var deferred = $q.defer();
+
+                $http.post('/login', user)
+                    .success(function(response) {
+                        if (response.success) {
+                            identity.currentUser = response.user;
+                            deferred.resolve(response);
+                        } else {
+                            deferred.reject(response);
+                        }
+                    })
+                    .error(function() {
+                        deferred.reject(false);
+                    });
 
                 return deferred.promise;
             },
@@ -24,14 +49,18 @@ classbook.factory('auth', ['$http', '$q', 'identity', 'UserResource', '$cookieSt
 
                 var deferred = $q.defer();
 
-                $http.post('/logout').success(function(response) {
-                    if (response.success) {
-                        identity.currentUser = undefined;
-                        deferred.resolve(true);
-                    } else {
-                        deferred.resolve(false);
-                    }
-                });
+                $http.post('/logout')
+                    .success(function(response) {
+                        if (response.success) {
+                            identity.currentUser = undefined;
+                            deferred.resolve(response);
+                        } else {
+                            deferred.reject(response);
+                        }
+                    })
+                    .error(function() {
+                        deferred.reject(false);
+                    });
 
                 return deferred.promise;
             },

@@ -8,13 +8,14 @@
         <link rel="stylesheet" href="vendor/toastr/toastr.css">
         <link rel="stylesheet" href="src/style/main.css">
     </head>
-    <body>
-        <div ng-controller="ClassbookLoginCtrl" ng-include="'src/app/header.tpl.html'"></div> 
-        <div class="container">
-            <div ui-view></div>
+    <body ng-controller="MainCtrl">
+        <div ng-controller="ClassbookAuthCtrl">
+            <div ng-include="'src/app/header.tpl.html'"></div> 
+            <div class="container">
+                <div ui-view></div>
+            </div>
+            <divng ng-include="'src/app/footer.tpl.html'"></div>
         </div>
-
-        <divng ng-include="'src/app/footer.tpl.html'"></div>
         
        
         <script src="vendor/angular/angular.js"></script>
@@ -26,13 +27,20 @@
         <script src="vendor/angular-cookies/angular-cookies.js"></script>
         <script src="vendor/angular-resource/angular-resource.js"></script>
         <script src="src/app/app.js"></script>
+        <script src="src/app/main-ctrl.js"></script>
         <script src="src/app/common/notifier.js"></script>
+        <script src="src/app/common/match.js"></script>
+        <script src="src/app/common/object-order-by-filter.js"></script>
         <script src="src/app/classbook/classbook.js"></script>
         <script src="src/app/classbook/identity.js"></script>
-        <script src="src/app/classbook/classbook-login-ctrl.js"></script>
+        <script src="src/app/classbook/classbook-auth-ctrl.js"></script>
         <script src="src/app/classbook/auth.js"></script>
         <script src="src/app/classbook/user-resource.js"></script>
+        <script src="src/app/classbook/admin/administrator.js"></script>
         <script src="src/app/classbook/admin/users-list-ctrl.js"></script>
+        <script src="src/app/classbook/moderator/absences-ctrl.js"></script>
+        <script src="src/app/classbook/moderator/moderator.js"></script>
+
 
     </body>
 </html>

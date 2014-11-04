@@ -5,15 +5,41 @@ var classbook = angular
 .config(['$stateProvider',
     function($stateProvider) {
         $stateProvider
-            .state('login', {
+            .state('classbook', {
+                url: '/classbook',
+                templateUrl: 'src/app/classbook/classbook.tpl.html',
+                controller: 'ClassbookAuthCtrl'
+            })
+            .state('classbook.login', {
                 url: '/login',
-                templateUrl: 'src/app/classbook/classbook-login.tpl.html',
-                controller: 'ClassbookLoginCtrl'
+                views: {
+                    '@': {
+                        templateUrl: 'src/app/classbook/classbook-login.tpl.html',
+                        controller: 'ClassbookAuthCtrl'
+                    }
+                }
+            })
+            .state('register', {
+                url: '/register',
+                templateUrl: 'src/app/classbook/register/register.tpl.html',
+                controller: 'ClassbookAuthCtrl'
             })
             .state('usersList', {
-                url: '/users',
+                url: '/classbook/admin/users',
                 templateUrl: 'src/app/classbook/admin/users-list.tpl.html',
                 controller: 'UsersListCtrl',
+                resolve: {
+                    admin: ['auth',
+                        function(auth) {
+                            return auth.isAuthorizedFor('admin');
+                        }
+                    ]
+                }
+            })
+            .state('absences', {
+                url: '/classbook/moderator/absences',
+                templateUrl: 'src/app/classbook/moderator/absences.tpl.html',
+                controller: 'AbsencesCtrl',
                 resolve: {
                     admin: ['auth',
                         function(auth) {

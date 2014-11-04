@@ -11,22 +11,23 @@
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#/home">Начало</a></li>
-                    <li><a href="#/">За нас</a></li>
-                    <li><a href="#/">Новини</a></li>
-                    <li><a href="#/">Програма</a></li>
-                    <li><a href="#/">Галерия</a></li>
+                    <li ng-class="{active:$state.includes('home')}"><a href="#/home">Начало</a></li>
+                    <li ng-class="{active:$state.includes('about')}"><a href="#/">За нас</a></li>
+                    <li ng-class="{active:$state.includes('news')}"><a href="#/">Новини</a></li>
+                    <li ng-class="{active:$state.includes('timetable')}"><a href="#/">Програма</a></li>
+                    <li ng-class="{active:$state.includes('gallery')}"><a href="#/">Галерия</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-hide="identity.isAuthenticated()"><a href="#/login">Дневник</a></li>
+                    <li ng-hide="identity.isAuthenticated()" ng-class="{active:$state.includes('classbook')}"><a ui-sref="classbook.login">Дневник</a></li>
                     <li ng-show="identity.isAuthenticated()" class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">
                             {{ identity.currentUser.fname + ' '+ identity.currentUser.lname}} 
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="">Дневник</a></li>
-                            <li ng-show="identity.isInRole('admin')"><a href="#/users">Потребители</a></li>
+                            <li><a href="#/classbook">Дневник</a></li>
+                            <li ng-show="identity.isInRole('admin')"><a href="#/classbook/admin/users">Потребители</a></li>
+                            <li ng-show="identity.isInRole('moderator')"><a href="#/classbook/moderator/absences">Отсъствия</a></li>
                             <li class="divider"></li>
                             <li><a href="" ng-click="logOut()">Изход</a></li>
                         </ul>

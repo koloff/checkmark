@@ -1,8 +1,13 @@
 var passport = require('passport');
 
 module.exports = {
+
+    //signup: function(req, res, next) {
+    //    console.log(req.body);
+    //},
+
     login: function(req, res, next) {
-        console.log('posting');
+        console.log('posting from login');
         var auth = passport.authenticate('local', function(err, user) {
             if (err) {
                 return next(err);

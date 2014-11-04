@@ -2,6 +2,19 @@ body {
     padding-top: 60px;
 }
 
+.form-group.required .control-label:after {
+  content: " *";
+  color: #039;
+}
+
+.bot-margin {
+    margin-bottom: 20px;
+}
+
+.bot-margin-big {
+    margin-bottom: 40px;
+}
+
 .toast-top-center { 
     top: 10%; 
     left: 50%; 
