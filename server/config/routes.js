@@ -18,6 +18,7 @@ module.exports = function(app, config) {
     app.put('/api/users/:number/roles/', auth.isInRole('admin'), usersController.setRole);
 
     app.get('/api/absences', auth.isInRole('moderator'), absencesController.getAllAbsences);
+    app.put('/api/absences', auth.isInRole('moderator'), absencesController.updateAbsences);
 
     app.post('/login', auth.login);
     app.post('/logout', auth.logout);

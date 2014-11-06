@@ -77,14 +77,12 @@ module.exports = {
             //User.remove({}).exec(function() {
             if (collection.length === 0) {
 
-                var salt, hashPass;
-
                 salt = encryption.generateSalt();
                 hashPass = encryption.generateHashedPassword('Anton', salt);
                 User.create({
                     number: 1,
-                    fname: 'Anton',
-                    lname: 'Koloff',
+                    fname: 'Антон',
+                    lname: 'Колов',
                     salt: salt,
                     email: 'tony@gmail.com',
                     hashPassword: hashPass,
@@ -95,8 +93,8 @@ module.exports = {
                 hashPass = encryption.generateHashedPassword('Pesho', salt);
                 User.create({
                     number: 3,
-                    fname: 'Pesho',
-                    lname: 'Peshovski',
+                    fname: 'Пешо',
+                    lname: 'Пешовски',
                     email: 'pesho@mail.bg',
                     salt: salt,
                     hashPassword: hashPass,
@@ -107,8 +105,8 @@ module.exports = {
                 hashPass = encryption.generateHashedPassword('Ivan', salt);
                 User.create({
                     number: 21,
-                    fname: 'Ivan',
-                    lname: 'Georgiev',
+                    fname: 'Иван',
+                    lname: 'Георгиев',
                     email: 'vankata@vank.bg',
                     salt: salt,
                     hashPassword: hashPass

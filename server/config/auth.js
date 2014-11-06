@@ -38,12 +38,11 @@ module.exports = {
             success: true
         });
         res.end();
-
     },
 
     isInRole: function(role) {
         return function(req, res, next) {
-            console.log(req.user);
+            //console.log(req.user);
             if (req.isAuthenticated() && req.user.roles.indexOf(role) > -1) {
                 next();
             } else {

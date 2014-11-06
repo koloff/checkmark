@@ -14,7 +14,8 @@ classbook.controller('ClassbookAuthCtrl', ['$scope', '$http', '$state', 'auth', 
             );
         }
 
-        $scope.inputClass = function(input) {
+        $scope.inputClass = function(input, $event) {
+            console.log($event);
             if ($scope.register[input].$dirty) {
                 if ($scope.register[input].$invalid || (hasServerErr && $scope.register[input].$name === $scope.signupErr.field)) {
                     return 'has-error';
