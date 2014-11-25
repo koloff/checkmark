@@ -14,6 +14,7 @@
                     <li ng-class="{active:$state.includes('home')}"><a href="#/home">Начало</a></li>
                     <li ng-class="{active:$state.includes('about')}"><a href="#/">За проекта</a></li>
                     <li ng-class="{active:$state.includes('news')}"><a href="#/">Новини</a></li>
+                    <li ng-class="{active:$state.includes('register')}" ng-show="!identity.isAuthenticated()"><a href="#/register">Регистрация</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-hide="identity.isAuthenticated()" ng-class="{active:$state.includes('classbook')}"><a ui-sref="classbook.login">Дневник</a></li>

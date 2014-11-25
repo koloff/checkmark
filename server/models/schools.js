@@ -37,12 +37,11 @@ module.exports = {
                 // creator - tony@gmail.com
                 var creatorUserEmail = 'tony@gmail.com';
 
-                User.find({
-
-                }, function(user, err) {
-                    console.log(err);
-
-                    console.log('users' + user);
+                User.findOne({
+                    email: creatorUserEmail
+                }, function(err, user) {
+                    console.log('err' + err);
+                    console.log('Creator from school seed: ' + user);
 
                     var creatorUserId = user._id;
 

@@ -9,7 +9,6 @@ var userSchema = mongoose.Schema({
     },
     number: {
         type: Number,
-        unique: true,
         match: /^\d{1,2}$/,
         min: 1,
         max: 30
@@ -78,56 +77,56 @@ module.exports = {
 
             //console.log(collection);
 
-            User.remove({}).exec(function() {
-                if (collection.length === 0) {
+            //User.remove({}).exec(function() {
+            if (collection.length === 0) {
 
-                    var salt, hashPass;
+                var salt, hashPass;
 
+                salt = encryption.generateSalt();
+                hashPass = encryption.generateHashedPassword('Anton', salt);
+                User.create({
+                    schoolClass: '54724fba7d095d5c2d5b17c5',
+                    number: 1,
+                    fname: 'Антон',
+                    lname: 'Колов',
+                    salt: salt,
+                    email: 'tony@gmail.com',
+                    hashPassword: hashPass,
+                    roles: ['admin']
+                }, function(user, err) {
                     salt = encryption.generateSalt();
-                    hashPass = encryption.generateHashedPassword('Anton', salt);
+                    hashPass = encryption.generateHashedPassword('Pesho', salt);
                     User.create({
                         schoolClass: '54724fba7d095d5c2d5b17c5',
-                        number: 1,
-                        fname: 'Антон',
-                        lname: 'Колов',
+                        number: 3,
+                        fname: 'Пешо',
+                        lname: 'Пешовски',
+                        email: 'pesho@mail.bg',
                         salt: salt,
-                        email: 'tony@gmail.com',
                         hashPassword: hashPass,
-                        roles: ['admin']
+                        roles: ['moderator']
                     }, function(user, err) {
                         salt = encryption.generateSalt();
-                        hashPass = encryption.generateHashedPassword('Pesho', salt);
+                        hashPass = encryption.generateHashedPassword('Ivan', salt);
                         User.create({
-                            schoolClass: '54724fba7d095d5c2d5b17c5',
-                            number: 3,
-                            fname: 'Пешо',
-                            lname: 'Пешовски',
-                            email: 'pesho@mail.bg',
+                            schoolClass: '54724fba7d095d5c2d5b17c6',
+                            number: 21,
+                            fname: 'Иван',
+                            lname: 'Георгиев',
+                            email: 'vankata@vank.bg',
                             salt: salt,
-                            hashPassword: hashPass,
-                            roles: ['moderator']
+                            hashPassword: hashPass
                         }, function(user, err) {
-                            salt = encryption.generateSalt();
-                            hashPass = encryption.generateHashedPassword('Ivan', salt);
-                            User.create({
-                                schoolClass: '54724fba7d095d5c2d5b17c6',
-                                number: 21,
-                                fname: 'Иван',
-                                lname: 'Георгиев',
-                                email: 'vankata@vank.bg',
-                                salt: salt,
-                                hashPassword: hashPass
-                            }, function(user, err) {
-                                User.find({}, function(users, err) {
-                                    console.log(users);
-                                });
-                                console.log('Users added to database!');
-                                return callback();
+                            User.find({}, function(users, err) {
+                                console.log(users);
                             });
+                            console.log('Users added to database!');
+                            return callback();
                         });
                     });
-                }
-            });
+                });
+            }
+            // });
         });
     }
 

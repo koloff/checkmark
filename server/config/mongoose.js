@@ -29,13 +29,13 @@ module.exports = function(config) {
 
     user.seedInitialUsers(function() {
         schools.seedInitialSchools(function() {
-            absences.seedInitialAbsences('54724fba7d095d5c2d5b17c5', function() {
-                marks.seedInitialMarks(function() {
-                    remarks.seedInitialRemarks(function() {
-                        return;
-                    });
-                });
-            });
+            // absences.seedInitialAbsences('54724fba7d095d5c2d5b17c5', function() {
+            //     marks.seedInitialMarks(function() {
+            //         remarks.seedInitialRemarks(function() {
+            //             return;
+            //         });
+            //     });
+            // });
         });
     });
 };

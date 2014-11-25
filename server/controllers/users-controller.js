@@ -14,6 +14,7 @@ module.exports = {
         var userToSave = new User(newUserData);
 
         userToSave.save(function(err) {
+            console.log(err);
             var objToSend = {};
 
             if (err) {

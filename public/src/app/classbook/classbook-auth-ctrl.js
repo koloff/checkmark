@@ -14,13 +14,10 @@ classbook.controller('ClassbookAuthCtrl', ['$scope', '$http', '$state', 'auth', 
             );
         }
 
-        $scope.inputClass = function(input, $event) {
-            console.log($event);
+        $scope.inputClass = function(input) {
             if ($scope.register[input].$dirty) {
-                if ($scope.register[input].$invalid || (hasServerErr && $scope.register[input].$name === $scope.signupErr.field)) {
-                    return 'has-error';
-                } else {
-                    return 'has-success';
+                if (hasServerErr && $scope.register[input].$name === $scope.signupErr.field) {
+                    return 'ng-invalid';
                 }
             } else {
                 return '';

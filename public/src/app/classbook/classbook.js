@@ -1,6 +1,6 @@
 var classbook = angular
 
-    .module('classbook', ['ngResource', 'ui.router', 'ngCookies'])
+.module('classbook', ['ngResource', 'ui.router', 'ngCookies'])
 
 .config(['$stateProvider',
     function($stateProvider) {
@@ -19,9 +19,9 @@ var classbook = angular
                     }
                 }
             })
-            .state('register', {
+            .state('registerUser', {
                 url: '/register',
-                templateUrl: 'src/app/classbook/register/register.tpl.html',
+                templateUrl: 'src/app/classbook/register/register-user.tpl.html',
                 controller: 'ClassbookAuthCtrl'
             })
             .state('registerStudent', {
