@@ -4,9 +4,11 @@ var Absences = require('mongoose').model('Absences'),
 module.exports = {
 
     getAllAbsences: function(req, res) {
-        Absences.find({}, function(err, collection) {
+        Absences.find({
+            schoolClass: req.params.schoolClass
+        }, function(err, collection) {
             if (err) {
-                console.log('Could not find absences: ' + err);
+                console.log('Error finding absences: ' + err);
                 return;
             }
 

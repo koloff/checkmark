@@ -1,6 +1,8 @@
 classbook.controller('AbsencesCtrl', ['$scope', 'moderator', 'notifier',
     function($scope, moderator, notifier) {
-        $scope.absences = moderator.Absences.query();
+        var absences = moderator.Absences.query().$promise.then(function(absences) {
+            $scope.absences = absences[0];
+        });
 
         $scope.updateAbsences = function(absences) {
             moderator.Absences.update(absences, function(response) {

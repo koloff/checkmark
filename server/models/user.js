@@ -1,11 +1,14 @@
 var mongoose = require('mongoose'),
     uniqueValidator = require('mongoose-unique-validator'),
+    Sync = require('sync'),
     encryption = require('../utilities/encryption');
 
 var userSchema = mongoose.Schema({
+    schoolClass: {
+        type: mongoose.Schema.ObjectId,
+    },
     number: {
         type: Number,
-        required: true,
         unique: true,
         match: /^\d{1,2}$/,
         min: 1,
@@ -53,6 +56,7 @@ userSchema
     .virtual('userInfo')
     .get(function() {
         return {
+            schoolClass: this.schoolClass,
             number: this.number,
             fname: this.fname,
             roles: this.roles
@@ -65,57 +69,66 @@ var User = mongoose.model('User', userSchema);
 
 module.exports = {
 
-    seedInitialUsers: function() {
+    seedInitialUsers: function(callback) {
         User.find({}, function(err, collection) {
             if (err) {
                 console.log('Cannot find users:' + err);
-                return;
+                return callback();
             }
 
             //console.log(collection);
 
-            //User.remove({}).exec(function() {
-            if (collection.length === 0) {
+            User.remove({}).exec(function() {
+                if (collection.length === 0) {
 
-                salt = encryption.generateSalt();
-                hashPass = encryption.generateHashedPassword('Anton', salt);
-                User.create({
-                    number: 1,
-                    fname: 'Антон',
-                    lname: 'Колов',
-                    salt: salt,
-                    email: 'tony@gmail.com',
-                    hashPassword: hashPass,
-                    roles: ['admin']
-                });
+                    var salt, hashPass;
 
-                salt = encryption.generateSalt();
-                hashPass = encryption.generateHashedPassword('Pesho', salt);
-                User.create({
-                    number: 3,
-                    fname: 'Пешо',
-                    lname: 'Пешовски',
-                    email: 'pesho@mail.bg',
-                    salt: salt,
-                    hashPassword: hashPass,
-                    roles: ['moderator']
-                });
-
-                salt = encryption.generateSalt();
-                hashPass = encryption.generateHashedPassword('Ivan', salt);
-                User.create({
-                    number: 21,
-                    fname: 'Иван',
-                    lname: 'Георгиев',
-                    email: 'vankata@vank.bg',
-                    salt: salt,
-                    hashPassword: hashPass
-                });
-
-                console.log('Users added to database!');
-            }
+                    salt = encryption.generateSalt();
+                    hashPass = encryption.generateHashedPassword('Anton', salt);
+                    User.create({
+                        schoolClass: '54724fba7d095d5c2d5b17c5',
+                        number: 1,
+                        fname: 'Антон',
+                        lname: 'Колов',
+                        salt: salt,
+                        email: 'tony@gmail.com',
+                        hashPassword: hashPass,
+                        roles: ['admin']
+                    }, function(user, err) {
+                        salt = encryption.generateSalt();
+                        hashPass = encryption.generateHashedPassword('Pesho', salt);
+                        User.create({
+                            schoolClass: '54724fba7d095d5c2d5b17c5',
+                            number: 3,
+                            fname: 'Пешо',
+                            lname: 'Пешовски',
+                            email: 'pesho@mail.bg',
+                            salt: salt,
+                            hashPassword: hashPass,
+                            roles: ['moderator']
+                        }, function(user, err) {
+                            salt = encryption.generateSalt();
+                            hashPass = encryption.generateHashedPassword('Ivan', salt);
+                            User.create({
+                                schoolClass: '54724fba7d095d5c2d5b17c6',
+                                number: 21,
+                                fname: 'Иван',
+                                lname: 'Георгиев',
+                                email: 'vankata@vank.bg',
+                                salt: salt,
+                                hashPassword: hashPass
+                            }, function(user, err) {
+                                User.find({}, function(users, err) {
+                                    console.log(users);
+                                });
+                                console.log('Users added to database!');
+                                return callback();
+                            });
+                        });
+                    });
+                }
+            });
         });
-        //});
     }
 
 };

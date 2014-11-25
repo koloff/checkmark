@@ -1,10 +1,37 @@
+/* Sticky footer styles */
+html {
+    position: relative;
+    min-height: 100%;
+}
 body {
+    height: 100%;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+}
+
+.footer .col-md-12 hr {
+    margin: 0 0 17px 0;
+}
+
+.footer .col-md-12 .footer-text {
+    vertical-align: middle;
+}
+
+/* Fixed navbar styles */
+body > .container {
     padding-top: 60px;
 }
 
 .form-group.required .control-label:after {
-  content: " *";
-  color: #039;
+    content: " *";
+    color: #039;
 }
 
 .bot-margin {
@@ -13,6 +40,10 @@ body {
 
 .bot-margin-big {
     margin-bottom: 40px;
+}
+
+.top-margin {
+    margin-top: 15px;  
 }
 
 .toast-top-center { 

@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<h2 class="text-center bot-margin">Отсъствия</h2>
+<h2 class="text-center bot-margin">Отсъствия {{absences.schoolClass}}</h2>
 
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
@@ -19,10 +19,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="absence in absences | orderBy: 'number'">
+
+                <tr ng-repeat="absence in absences.absences | orderBy: 'number'">
                     <td>{{absence.number}}</td>
-                    <td class="col-md-1"><input class="form-control input-sm" type="text" ng-model="absence.excused" ng-pattern="/^\d{1,2,3}$/"></td>
-                    <td class="col-md-1"><input class="form-control input-sm" type="text" ng-model="absence.inexcused" ng-pattern="/(^\d+$)|(^\d+\/\d+$)|(^\d+\s+\d+\/\d+$)/"></td>
+                    <td class="col-md-1">
+                        <div class="form-group" show-validation>
+                            <input class="form-control input-sm" required type="text" ng-model="absence.excused" ng-pattern="/^\d{1,3}$/">
+                        </div>
+                    </td>
+                    <td class="col-md-1">
+                        <div class="form-group" show-validation>
+                             <input class="form-control input-sm" required type="text" ng-model="absence.inexcused" ng-pattern="/(^\d+$)|(^\d+\/\d+$)|(^\d+\s+\d+\/\d+$)/">
+                        </div>  
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="3">

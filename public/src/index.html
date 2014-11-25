@@ -2,23 +2,23 @@
 <html lang="en" ng-app="app">
     <head>
         <meta charset="UTF-8">
-        <title>10 клас</title>
+        <title>Checkmark</title>
+        <link rel="shortcut icon" href="src/images/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="src/images//favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="src/bootstrap-theme/bootstrap-theme.min.css">
         <link rel="stylesheet" href="vendor/toastr/toastr.css">
         <link rel="stylesheet" href="src/style/main.css">
     </head>
     <body ng-controller="MainCtrl">
-        <div ng-controller="ClassbookAuthCtrl">
+        <div class="content container" ng-controller="ClassbookAuthCtrl">
             <div ng-include="'src/app/header.tpl.html'"></div> 
-            <div class="container">
-                <div ui-view></div>
-            </div>
-            <divng ng-include="'src/app/footer.tpl.html'"></div>
+            <div ui-view></div>
         </div>
+        <div ng-include="'src/app/footer.tpl.html'"></div>
 
-        <script src="vendor/angular/angular.js"></script>
         <script src="vendor/jquery/dist/jquery.js"></script>
+        <script src="vendor/angular/angular.js"></script>
         <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
         <script src="vendor/toastr/toastr.js"></script>
         <script src="vendor/angular-route/angular-route.js"></script>
@@ -30,10 +30,16 @@
         <script src="src/app/common/notifier.js"></script>
         <script src="src/app/common/match.js"></script>
         <script src="src/app/common/object-order-by-filter.js"></script>
+        <script src="src/app/common/bulgarian-regions.js"></script>
+        <script src="src/app/common/school-abbreviations.js"></script>
+        <script src="src/app/common/show-validation.js"></script>
         <script src="src/app/classbook/classbook.js"></script>
         <script src="src/app/classbook/identity.js"></script>
         <script src="src/app/classbook/classbook-auth-ctrl.js"></script>
         <script src="src/app/classbook/auth.js"></script>
+        <script src="src/app/classbook/schools-ctrl.js"></script>
+        <script src="src/app/classbook/school-classes-ctrl.js"></script>
+        <script src="src/app/classbook/schools-resource.js"></script>
         <script src="src/app/classbook/user-resource.js"></script>
         <script src="src/app/classbook/admin/administrator.js"></script>
         <script src="src/app/classbook/admin/users-list-ctrl.js"></script>

@@ -7,7 +7,7 @@ classbook.factory('auth', ['$http', '$q', 'identity', 'UserResource', '$cookieSt
 
                 UserResource.save(user).$promise.then(
                     function(response) {
-                console.log(response);
+                        console.log(response);
                         if (response.success) {
                             deferred.resolve(response);
                         } else {

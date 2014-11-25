@@ -34,7 +34,8 @@ classbook.controller('ClassbookAuthCtrl', ['$scope', '$http', '$state', 'auth', 
                 function(success) {
                     notifier.success('Вие се регистрирахте успешно!');
                     login(user);
-                }, function(error) {
+                },
+                function(error) {
                     hasServerErr = true;
                     console.log(error);
                     $scope.signupErr = error;
@@ -53,7 +54,8 @@ classbook.controller('ClassbookAuthCtrl', ['$scope', '$http', '$state', 'auth', 
                 function(success) {
                     $state.go('home');
                     notifier.success('Излязохте успешно!');
-                }, function(error) {
+                },
+                function(error) {
                     notifier.error('Нещо лошо се случи! :(');
                 }
             );

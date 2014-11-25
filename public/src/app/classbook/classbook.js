@@ -1,6 +1,6 @@
 var classbook = angular
 
-.module('classbook', ['ngResource', 'ui.router', 'ngCookies'])
+    .module('classbook', ['ngResource', 'ui.router', 'ngCookies'])
 
 .config(['$stateProvider',
     function($stateProvider) {
@@ -24,12 +24,27 @@ var classbook = angular
                 templateUrl: 'src/app/classbook/register/register.tpl.html',
                 controller: 'ClassbookAuthCtrl'
             })
+            .state('registerStudent', {
+                url: '/register-student',
+                templateUrl: 'src/app/classbook/register/register-student.tpl.html',
+                controller: 'ClassbookAuthCtrl'
+            })
+            .state('registerSchool', {
+                url: '/register-school',
+                templateUrl: 'src/app/classbook/register/register-school.tpl.html',
+                controller: 'SchoolsCtrl'
+            })
+            .state('registerSchoolClass', {
+                url: '/register-class',
+                templateUrl: 'src/app/classbook/register/register-class.tpl.html',
+                controller: 'SchoolClassesCtrl'
+            })
             .state('usersList', {
                 url: '/classbook/admin/users',
                 templateUrl: 'src/app/classbook/admin/users-list.tpl.html',
                 controller: 'UsersListCtrl',
                 resolve: {
-                    admin: ['auth',
+                    adminAuth: ['auth',
                         function(auth) {
                             return auth.isAuthorizedFor('admin');
                         }
@@ -41,9 +56,9 @@ var classbook = angular
                 templateUrl: 'src/app/classbook/moderator/absences.tpl.html',
                 controller: 'AbsencesCtrl',
                 resolve: {
-                    admin: ['auth',
+                    moderatorAuth: ['auth',
                         function(auth) {
-                            return auth.isAuthorizedFor('admin');
+                            return auth.isAuthorizedFor('moderator');
                         }
                     ]
                 }

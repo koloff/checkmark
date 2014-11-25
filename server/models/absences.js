@@ -1,9 +1,8 @@
 var mongoose = require('mongoose'),
     Sync = require('sync'),
-    uniqueValidator = require('mongoose-unique-validator'),
-    Fraction = require('../utilities/fraction');
+    uniqueValidator = require('mongoose-unique-validator');
 
-var absencesSchema = mongoose.Schema({
+var studentAbsencesSchema = mongoose.Schema({
     number: {
         type: Number,
         required: true,
@@ -23,27 +22,37 @@ var absencesSchema = mongoose.Schema({
     }
 });
 
+var classAbsencesSchema = mongoose.Schema({
+    schoolClass: {
+        type: mongoose.Schema.ObjectId,
+        unique: true
+    },
+    absences: [studentAbsencesSchema]
+});
 
-absencesSchema.plugin(uniqueValidator);
 
-var Absences = mongoose.model('Absences', absencesSchema);
+var Absences = mongoose.model('Absences', classAbsencesSchema);
 
 
 module.exports = {
 
-    seedInitialAbsences: function() {
+    seedInitialAbsences: function(schoolClass, callback) {
 
-        //Absences.remove({}, function(err) {
-        Absences.find({}, function(err, collection) {
+        // Absences.remove({}, function(err) {
+
+        Absences.findOne({
+            schoolClass: schoolClass
+        }, function(err, absences) {
             if (err) {
-                console.log('Could not find absences: ' + err);
-                return;
+                console.log('Absences were not seeded: ' + err);
+                return callback();
             }
 
-            if (collection.length === 0) {
+            if (absences) {
+                console.log("absences: " + absences);
+            }
 
-                console.log('Before loop');
-
+            if (!absences) {
                 Sync(function() {
                     var arrToSave = [];
                     for (var i = 0; i < 25; i++) {
@@ -58,67 +67,24 @@ module.exports = {
                     return arrToSave;
                 }, function(err, result) {
                     console.log(result);
-                    Absences.create(result, function(err) {
+                    Absences.create({
+                        schoolClass: schoolClass,
+                        absences: result
+                    }, function(err, result) {
                         if (err) {
-                            console.log('Error seeding absences: ' + err);
-                            return;
+                            console.log('Absences seeding err: ' + err);
+                            return callback();
                         }
+                        console.log(result);
 
-                        console.log('Absences seeded!');
+                        console.log('Absences for schoolClass ' + schoolClass + ' seeded!');
+                        return callback();
                     });
                 });
-
-
-
-                /* Absences.create({
-                    number: 1,
-                    excused: 0,
-                    inexcused: '3 1/3'
-                });
-
-                Absences.create({
-                    number: 3,
-                    excused: 5,
-                    inexcused: '0'
-                });
-
-                Absences.create({
-                    number: 5,
-                    excused: 44,
-                    inexcused: '1/2'
-                });
-
-                Absences.create({
-                    number: 21,
-                    excused: 3,
-                    inexcused: '22'
-                });*/
             }
+
         });
-        //});
 
+        // });
     }
-
 };
-
-/*var testFractions = [
-    '1',
-    '2 1/3',
-    '3 3/4',
-    '5',
-    '0 5/6',
-    '155/2',
-    '4/56',
-    '4 5',
-    '66 66',
-    '56 /',
-    '23 2/',
-    '6 /2',
-    '2/',
-    '/2',
-    '/'
-];
-
-for (var i = 0; i < testFractions.length; i++) {
-    console.log(testFractions[i] + ' : ' + /(^\d+$)|(^\d+\/\d+$)|(^\d+\s+\d+\/\d+$)/.test(testFractions[i]));
-}*/

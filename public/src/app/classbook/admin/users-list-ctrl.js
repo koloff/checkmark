@@ -1,7 +1,7 @@
 classbook.controller('UsersListCtrl', ['$scope', 'UserResource', 'administrator', 'notifier',
     function($scope, UserResource, administrator, notifier) {
         $scope.users = UserResource.query();
-        console.log(administrator);
+        console.log($scope.users);
 
         $scope.setRole = function(number, role, $event) {
             //console.log(number + role + checked);

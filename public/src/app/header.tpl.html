@@ -2,7 +2,7 @@
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="#/home" class="navbar-brand">10a клас</a>
+                <a href="#/home" class="navbar-brand">Checkmark</a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -12,10 +12,8 @@
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                 <ul class="nav navbar-nav">
                     <li ng-class="{active:$state.includes('home')}"><a href="#/home">Начало</a></li>
-                    <li ng-class="{active:$state.includes('about')}"><a href="#/">За нас</a></li>
+                    <li ng-class="{active:$state.includes('about')}"><a href="#/">За проекта</a></li>
                     <li ng-class="{active:$state.includes('news')}"><a href="#/">Новини</a></li>
-                    <li ng-class="{active:$state.includes('timetable')}"><a href="#/">Програма</a></li>
-                    <li ng-class="{active:$state.includes('gallery')}"><a href="#/">Галерия</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-hide="identity.isAuthenticated()" ng-class="{active:$state.includes('classbook')}"><a ui-sref="classbook.login">Дневник</a></li>

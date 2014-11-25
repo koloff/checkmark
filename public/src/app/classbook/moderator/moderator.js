@@ -1,6 +1,7 @@
-classbook.factory('moderator', ['$resource',
-    function($resource) {
-        var Absences = $resource('/api/absences/:number', {
+classbook.factory('moderator', ['$resource', 'identity',
+    function($resource, identity) {
+        var Absences = $resource('/api/absences/:schoolClass/:number', {
+            schoolClass: identity.currentUser.schoolClass,
             number: '@number'
         }, {
             update: {
