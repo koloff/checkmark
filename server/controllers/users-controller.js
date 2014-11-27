@@ -6,6 +6,7 @@ module.exports = {
     createUser: function(req, res) {
 
         console.log('saving user...');
+        console.log(req.body);
 
         var newUserData = req.body;
         newUserData.salt = encryption.generateSalt();

@@ -1,11 +1,11 @@
-classbook.controller('SchoolsCtrl', ['$scope', 'bulgarianRegions', 'schoolAbbreviations', 'SchoolsResource', 'notifier',
-    function($scope, bulgarianRegions, schoolAbbreviations, SchoolsResource, notifier) {
+classbook.controller('SchoolsCtrl', ['$scope', 'bulgarianRegions', 'schoolAbbreviations', 'Resources', 'notifier',
+    function($scope, bulgarianRegions, schoolAbbreviations, Resources, notifier) {
         $scope.regions = bulgarianRegions.getRegions();
         $scope.abbreviations = schoolAbbreviations.getAbbreviations();
-        $scope.registeredSchools = SchoolsResource.query();
+        $scope.registeredSchools = Resources.Schools.query();
 
         $scope.registerSchool = function(school) {
-            SchoolsResource.save(school, function(response) {
+            Resources.Schools.save(school, function(response) {
                 if (response.success) {
                     notifier.success("Училището беше запаметено успешно!");
                 } else {

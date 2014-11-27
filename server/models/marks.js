@@ -1,17 +1,12 @@
 var mongoose = require('mongoose'),
+    School = mongoose.model('School'),
+    SchoolClass = mongoose.model('SchoolClass'),
     Sync = require('sync'),
     uniqueValidator = require('mongoose-unique-validator');
 
 // student's marks for certain subject
 var studentMarksSchema = mongoose.Schema({
-    number: {
-        type: Number,
-        required: true,
-        unique: true,
-        match: /^\d{1,2}$/,
-        min: 1,
-        max: 30
-    },
+    student: mongoose.Schema.ObjectId,
     marks: {
         type: [Number]
     }
@@ -31,59 +26,83 @@ var Marks = mongoose.model('Marks', classMarksSchema);
 
 module.exports = {
 
-    seedInitialMarks: function(schoolClass, subject, callback) {
+    seedInitialMarks: function(subject, callback) {
 
-        Marks.remove({}, function(err) {
+        // schoolClass to connect - 10a PMG - Montana
+        var classToConnectSchool = 'Св. Климент Охридски',
+            classToConnectGrade = 10,
+            classToConnectLetter = 'a';
 
+        School.findOne({
+            name: classToConnectSchool
+        }, function(err, school) {
 
-            Marks.findOne({
-                schoolClass: schoolClass,
-                subject: subject
-            }, function(err, marks) {
+            var classToConnectSchoolId = school._id;
 
-                if (err) {
-                    console.log('Could not find mark: ' + err);
-                    return callback();
-                }
+            SchoolClass.findOne({
+                school: classToConnectSchoolId,
+                grade: classToConnectGrade,
+                letter: classToConnectLetter
+            }, function(err, schoolClass) {
 
-                if (!marks) {
-                    Sync(function() {
-                        var arrToSave = [];
-                        for (var i = 0; i < 25; i++) {
-                            arrToSave[i] = {};
+                console.log(schoolClass);
 
-                            numberToCreate = i + 1;
+                var classToConnectId = schoolClass._id;
 
-                            var marks = [];
-                            for (var j = 0; j < 9; j++) {
-                                marks[j] = null;
-                            }
+                Marks.findOne({
+                    schoolClass: classToConnectId,
+                    subject: subject
+                }, function(err, marks) {
 
-                            arrToSave[i].number = numberToCreate;
-                            arrToSave[i].marks = marks;
+                    if (err) {
+                        console.log('Could not find mark: ' + err);
+                        return callback();
+                    }
+
+                    Marks.remove({}, function(err) {
+                        if (!marks) {
+                            Sync(function() {
+                                var arrToSave = [];
+                                for (var i = 0; i < 25; i++) {
+                                    arrToSave[i] = {};
+
+                                    numberToCreate = i + 1;
+
+                                    var marks = [];
+                                    for (var j = 0; j < 9; j++) {
+                                        marks[j] = null;
+                                    }
+
+                                    arrToSave[i].number = numberToCreate;
+                                    arrToSave[i].marks = marks;
+                                }
+
+                                return arrToSave;
+                            }, function(err, result) {
+                                Marks.create({
+                                    schoolClass: schoolClass,
+                                    subject: subject,
+                                    marks: result
+                                }, function(err) {
+                                    if (err) {
+                                        console.log('Error seeding marks: ' + err);
+                                        return callback();
+                                    }
+
+                                    console.log('Marks seeded!');
+                                    return callback();
+                                });
+                            });
                         }
-
-                        return arrToSave;
-                    }, function(err, result) {
-                        Marks.create({
-                            schoolClass: schoolClass,
-                            subject: subject,
-                            marks: result
-                        }, function(err) {
-                            if (err) {
-                                console.log('Error seeding marks: ' + err);
-                                return callback();
-                            }
-
-                            console.log('Marks seeded!');
-                            return callback();
-                        });
                     });
-                }
+
+                });
 
             });
-
         });
+
+
+
     }
 
 };

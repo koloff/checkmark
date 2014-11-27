@@ -5,13 +5,13 @@ var passport = require('passport'),
 module.exports = function() {
 
     passport.use(new LocalStrategy({
-        usernameField: 'number',
+        usernameField: 'email',
         passwordField: 'password'
-    }, function(number, password, done) {
+    }, function(email, password, done) {
+        console.log('entering authentication');
         User.findOne({
-            number: number
+            email: email
         }).exec(function(err, user) {
-
             if (err) {
                 console.log('Error loading user: ' + err);
                 return;

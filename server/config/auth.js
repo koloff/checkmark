@@ -7,9 +7,11 @@ module.exports = {
     //},
 
     login: function(req, res, next) {
-        console.log('posting from login');
+        console.log('posting from login:');
+        console.log(req.body);
         var auth = passport.authenticate('local', function(err, user) {
             if (err) {
+                console.log(err);
                 return next(err);
             }
             if (!user) {
@@ -44,6 +46,17 @@ module.exports = {
         return function(req, res, next) {
             //console.log(req.user);
             if (req.isAuthenticated() && req.user.roles.indexOf(role) > -1) {
+                next();
+            } else {
+                res.status(403);
+                res.end();
+            }
+        };
+    },
+
+    isInRightClass: function() {
+        return function(req, res, next) {
+            if (req.isAuthenticated() && req.params.schoolClass === req.user.schoolClass.toString()) {
                 next();
             } else {
                 res.status(403);

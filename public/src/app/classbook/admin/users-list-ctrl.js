@@ -1,6 +1,6 @@
-classbook.controller('UsersListCtrl', ['$scope', 'UserResource', 'administrator', 'notifier',
-    function($scope, UserResource, administrator, notifier) {
-        $scope.users = UserResource.query();
+classbook.controller('UsersListCtrl', ['$scope', 'Resources', 'administrator', 'notifier',
+    function($scope, Resources, administrator, notifier) {
+        $scope.users = Resources.Users.query();
         console.log($scope.users);
 
         $scope.setRole = function(number, role, $event) {

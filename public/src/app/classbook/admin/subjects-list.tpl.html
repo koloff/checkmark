@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>Администратор</h1>
+        </div>
+    </div>
+</div>
+
+<h2 class="text-center bot-margin">Предмети {{subjects}}</h2>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+
+        <ul class="list-group">
+            <form name="subjectsList" class="form form-horizontal">
+
+                <li class="list-group-item" ng-repeat="subjectObj in subjects track by $index">
+                    <div class="form-group control-group">
+                        <div class="col-md-9">
+                            <input type="text" placeholder="Име на предмета" ng-model="subjectObj.subject" class="form-control" id="inputDefault" required>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="" ng-click="removeSubject($index)" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> Премахни</a>
+                        </div>
+                    </div>
+                </li>
+
+            </form>
+        </ul>
+        <a href="" ng-disabled="subjectsList.$invalid"  ng-click="addSubject()" class="btn btn-success btn-block">Добави предмет</a>
+        <a href="" ng-disabled="subjectsList.$invalid"  ng-click="saveSubjects(subjects)" class="btn btn-primary btn-block">Запази предметите</a>
+
+    </div>
+</div>

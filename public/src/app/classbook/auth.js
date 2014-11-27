@@ -1,11 +1,11 @@
-classbook.factory('auth', ['$http', '$q', 'identity', 'UserResource', '$cookieStore',
-    function($http, $q, identity, UserResource, $cookieStore) {
+classbook.factory('auth', ['$http', '$q', 'identity', 'Resources', '$cookieStore',
+    function($http, $q, identity, Resources, $cookieStore) {
         return {
 
             signup: function(user) {
                 var deferred = $q.defer();
 
-                UserResource.save(user).$promise.then(
+                Resources.Users.save(user).$promise.then(
                     function(response) {
                         console.log(response);
                         if (response.success) {

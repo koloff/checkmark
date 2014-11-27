@@ -1,9 +1,19 @@
 var classbook = angular
 
-.module('classbook', ['ngResource', 'ui.router', 'ngCookies'])
+    .module('classbook', ['ngResource', 'ui.router', 'ngCookies'])
 
 .config(['$stateProvider',
     function($stateProvider) {
+
+        var resolveCheck = {
+            admin: function(auth) {
+                return auth.isAuthorizedFor('admin');
+            },
+            authenticated: function(auth) {
+                return auth.isAuthenticated();
+            }
+        };
+
         $stateProvider
             .state('classbook', {
                 url: '/classbook',
@@ -23,6 +33,10 @@ var classbook = angular
                 url: '/register',
                 templateUrl: 'src/app/classbook/register/register-user.tpl.html',
                 controller: 'ClassbookAuthCtrl'
+            })
+            .state('addInfo', {
+                url: '/add-info',
+                templateUrl: 'src/app/classbook/register/add.tpl.html'
             })
             .state('registerStudent', {
                 url: '/register-student',
@@ -44,11 +58,16 @@ var classbook = angular
                 templateUrl: 'src/app/classbook/admin/users-list.tpl.html',
                 controller: 'UsersListCtrl',
                 resolve: {
-                    adminAuth: ['auth',
-                        function(auth) {
-                            return auth.isAuthorizedFor('admin');
-                        }
-                    ]
+                    admin: resolveCheck.admin
+                }
+
+            })
+            .state('subjectsList', {
+                url: '/classbook/admin/subjects',
+                templateUrl: 'src/app/classbook/admin/subjects-list.tpl.html',
+                controller: 'SubjectsListCtrl',
+                resolve: {
+                    admin: resolveCheck.admin
                 }
             })
             .state('absences', {
@@ -56,11 +75,7 @@ var classbook = angular
                 templateUrl: 'src/app/classbook/moderator/absences.tpl.html',
                 controller: 'AbsencesCtrl',
                 resolve: {
-                    moderatorAuth: ['auth',
-                        function(auth) {
-                            return auth.isAuthorizedFor('moderator');
-                        }
-                    ]
+                    admin: resolveCheck.admin
                 }
             });
     }

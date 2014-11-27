@@ -33,47 +33,79 @@ module.exports = {
                 return callback();
             }
 
-            // SchoolClass.remove({}, function(err) {
-            if (collection.length === 0) {
+            SchoolClass.remove({}, function(err) {
+                if (collection.length === 0) {
 
-                // connect to PMG - Montana
-                // creator - tony@gmail.com
-                var schoolToConnectName = 'Св. Климент Охридски',
-                    creatorUserEmail = 'tony@gmail.com';
+                    // connect to PMG - Montana
+                    // creator - tony@gmail.com
+                    var schoolToConnectName = 'Св. Климент Охридски',
+                        creatorUserEmail = 'tony@gmail.com';
 
-                School.findOne({
-                    name: schoolToConnectName
-                }, function(school) {
-                    var schoolToConnectId = school._id;
+                    School.findOne({
+                        abbreviation: 'ПМГ'
+                    }, function(err, school) {
+                        console.log('school from class seed: ');
+                        console.log(school);
+                        var schoolToConnectId = school._id;
 
-                    User.findOne({
-                        email: creatorUserEmail
-                    }, function(user) {
-                        var creatorUserId = user._id;
+                        User.findOne({
+                            email: creatorUserEmail
+                        }, function(err, user) {
+                            var creatorUserId = user._id;
 
-                        // create school
-                        SchoolClass.create({
-                            school: schoolToConnectId,
-                            grade: 10,
-                            letter: 'a',
-                            registrationDate: new Date().toUTCString(),
-                            creator: creatorUserId
-                        }, function(err, collection) {
+                            // create school
+                            SchoolClass.create({
+                                school: schoolToConnectId,
+                                grade: 10,
+                                letter: 'a',
+                                registrationDate: new Date().toUTCString(),
+                                creator: creatorUserId
+                            }, function(err, collection) {
 
-                            if (err) {
-                                console.log('Error seeding classes: ' + err);
+                                if (err) {
+                                    console.log('Error seeding classes: ' + err);
+                                    return callback();
+                                }
+
+                                console.log(collection);
+                                console.log('Classes seeded!');
                                 return callback();
-                            }
-
-                            console.log(collection);
-                            console.log('Classes seeded!');
-                            return callback();
+                            });
                         });
                     });
-                });
-            }
-            // });
-
+                }
+            });
         });
-    }
+    },
+
+    connectInitialUsersToClass: function(callback) {
+        // schoolClass to connect - 10a PMG - Montana
+        var classToConnectSchool = 'Св. Климент Охридски',
+            classToConnectGrade = 10,
+            classToConnectLetter = 'a';
+
+        School.findOne({
+            name: classToConnectSchool
+        }, function(err, school) {
+
+            var classToConnectSchoolId = school._id;
+
+            SchoolClass.findOne({
+                school: classToConnectSchoolId,
+                grade: classToConnectGrade,
+                letter: classToConnectLetter
+            }, function(err, schoolClass) {
+                console.log(schoolClass);
+                var classToConnectId = schoolClass._id;
+
+                User.update({}, {
+                    schoolClass: classToConnectId
+                }, function(err, users) {
+                    console.log('users connected to schoolClass:');
+                    console.log(users);
+                    return callback();
+                });
+            });
+        });
+    },
 };

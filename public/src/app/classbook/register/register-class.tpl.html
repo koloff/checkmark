@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-md-12">
         <div class="page-header">
-            <h1>Регистрация</h1>
+            <h1>Добавяне на клас</h1>
         </div>
     </div>
 </div>
 <div class="row"  ng-controller="SchoolClassesCtrl">
     <div class="col-md-7 col-md-offset-2">
         <div class="well">
-        <form name="register" class="form-horizontal" novalidate>
+        <form name="schoolClassForm" class="form-horizontal" novalidate>
             <fieldset>
 
 
@@ -21,19 +21,33 @@
                             <div class="form-group control-group">
                                 <label for="select" class="col-lg-2 control-label">Област</label>
                                 <div class="col-lg-10">
-                                    <select class="form-control" ng-model="region" ng-options="region for region in regions">
+                                    <select class="form-control" ng-model="schoolClass.region" ng-options="region for region in regions">
                                         <option value="">Изберете област</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group control-group" ng-show="region">
+                            <div class="form-group control-group" ng-show="schoolClass.region">
                                 <label for="select" class="col-lg-2 control-label">Училище</label>
                                 <div class="col-lg-10">
-                                    <select class="form-control" ng-model="registeredSchool" ng-options="registeredSchool for registeredSchool in registeredSchools | filter: region">
+                                    <select
+                                        ng-model="schoolClass.schoolObj"
+                                        class="form-control"
+                                        ng-options="registeredSchool.abbreviation + ' &#8220;' + registeredSchool.name + '&#8221;'
+                                        for registeredSchool in registeredSchools
+                                        | filter: schoolClass.region">
                                         <option value="">Изберете училище</option>
                                     </select>
                                 </div>
                             </div>
+
+                            <ul class="list-group" ng-show="registeredSchool">
+                                <li class="list-group-item">
+                                    <h4>Регистрирани класове в {{registeredSchool.abbreviation}} <i>"{{registeredSchool.name}}"</i></h4>
+                                </li>
+                                <li class="list-group-item" ng-repeat="registeredClass in registeredClasses">
+                                   <strong> {{registeredClass.grade}} <sup>{{registeredClass.letter}}</sup> клас</strong>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
@@ -43,101 +57,59 @@
                             Полетата маркирани с <span style="color: #039; font-size: 1.3em">*</span> са задължителни!
                         </div>
                     </div>
-                    <div class="form-group control-group required">
+                    <div class="form-group control-group">
                         <label for="select" class="col-md-3 control-label">Област:</label>
                         <div class="col-md-7">
-                            <select class="form-control" ng-model="school.region" ng-options="region for region in regions">
-                                <option value="">Област на училището</option>
+                            <select class="form-control" ng-model="schoolClass.region" ng-options="region for region in regions">
+                                <option value="">Изберете област</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group control-group">
-                        <label for="abbreviation" class="col-md-3 control-label">Тип училище:</label>
+                    <div class="form-group control-group required">
+                        <label for="select" class="col-md-3 control-label">Училище:</label>
                         <div class="col-md-7">
-                            <select class="form-control" ng-model="school.abbreviation" ng-options="abbreviation for abbreviation in abbreviations">
-                                <option value="">Абревиатура на училището</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group control-group required" show-validation>
-                        <label for="email" class="col-md-3 control-label">Училищно име:</label>
-                        <div class="col-md-7">
-                            <input 
-                                type="text"
-                                name="schoolName"
-                                id="schoolName" 
-                                class="form-control" 
-                                ng-model="school.name" 
-                                placeholder="наименование на училището"
+                            <select 
+                                ng-model="schoolClass.schoolObj"
+                                class="form-control"
+                                ng-options="registeredSchool.abbreviation + ' &#8220;' + registeredSchool.name + '&#8221;'
+                                for registeredSchool in registeredSchools
+                                | filter: schoolClass.region"
                                 required>
-                                <span class="help-block">без абревиатурата и кавичките</span>
+                                <option value="">Изберете училище</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group control-group required" show-validation>
+                        <label for="select" class="col-md-3 control-label">Клас:</label>
+                        <div class="col-md-4">
+                            <select 
+                                ng-model="schoolClass.grade"
+                                class="form-control"
+                                required>
+                                <option value="">Изберете клас</option>
+                                <option ng-repeat="n in [] | range:12" value="{{$index+1}}">{{$index+1}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group control-group required" show-validation>
+                        <label for="select" class="col-md-3 control-label">Паралелка:</label>
+                        <div class="col-md-4">
+                            <select 
+                                ng-model="schoolClass.letter"
+                                class="form-control"
+                                required>
+                                <option value="">Изберете паралелка</option>
+                                <option value="а">а</option>
+                                <option value="б">б</option>
+                                <option value="в">в</option>
+                                <option value="г">г</option>
+                                <option value="д">д</option>
+                                <option value="е">е</option>
+                            </select>
                         </div>
                     </div>
                     
-                    <hr>
-                    <div class="form-group control-group required" show-validation>
-                        <label for="email" class="col-md-3 control-label">E-mail:</label>
-                        <div class="col-md-7">
-                            <input 
-                                type="email"
-                                name="schoolCreatorEmail"
-                                id="schoolCreatorEmail" 
-                                class="form-control" 
-                                ng-model="school.creator.email" 
-                                placeholder="ел. поща"
-                                required>
-                                <span class="help-block">Вашият email.</span>
-                        </div>
-                        <span class="label label-danger" 
-                        ng-show="signupErr.reason === 'EMAIL_NOT_UNIQUE'">Email-ът е зает!</span>
-                    </div>
-                    <div class="form-group control-group required" show-validation>
-                        <label for="fname" class="col-md-3 control-label">Име:</label>
-                        <div class="col-md-7">
-                            <input
-                                type="text"
-                                name="schoolCreatorFname"
-                                id="schoolCreatorFname"
-                                class="form-control"
-                                ng-model="school.creator.fname"
-                                ng-pattern="/^[а-яА-Я -']+$/"
-                                placeholder="име"
-                                required >
-                            <span class="help-block">Вашето име кирилица.</span>
-                        </div>
-                    </div>
-                    <div class="form-group control-group required" show-validation>
-                        <label for="lname" class="col-md-3 control-label">Фамилия:</label>
-                        <div class="col-md-7">
-                            <input 
-                                type="text"
-                                name="schoolCreatorLname"
-                                id="schoolCreatorLname"
-                                class="form-control"
-                                ng-model="school.creator.lname"
-                                ng-pattern="/^[а-яА-Я -']+$/"
-                                placeholder="фамилия"
-                                required>
-                            <span class="help-block">Вашата фамилия на кирилица.</span>
-                        </div>
-                    </div>
-                    <div class="col-md-7 col-md-offset-3">
-                        <div class="form-group control-group required" show-validation>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                    ng-model="schoolCreatorAggree"
-                                    name="schoolCreatorAgree"
-                                    id="schoolCreatorAgree" 
-                                    required>
-                                    Съгласен съм с <a href="#terms-and-conditions" target="_blank">условията за ползване</a>.
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <button ng-disabled="register.$invalid" ng-click="registerSchool(school)" class="btn btn-primary center-block" style="width: 100%;">Регистрация</button>
-            
+                    <button ng-disabled="schoolClassForm.$invalid" ng-click="registerSchoolClass(schoolClass)" class="btn btn-primary center-block" style="width: 100%;">Регистрация</button>
             </fieldset>
         </form>
         </div>

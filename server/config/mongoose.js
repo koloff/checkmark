@@ -3,10 +3,11 @@ var mongoose = require('mongoose'),
     async = require('async'),
     Sync = require('sync'),
     user = require('../models/user'),
+    school = require('../models/school'),
+    schoolClass = require('../models/school-class'),
     absences = require('../models/absences'),
     marks = require('../models/marks'),
-    remarks = require('../models/remarks'),
-    schools = require('../models/schools');
+    remarks = require('../models/remarks');
 
 
 module.exports = function(config) {
@@ -26,16 +27,28 @@ module.exports = function(config) {
         console.log('Database error: ' + err);
     });
 
+    // school.seedInitialSchools(function() {
+    //     schoolClass.seedInitialSchoolClasses(function() {
+    //         marks.seedInitialMarks('BEL', function() {
+    //             marks.seedInitialMarks('Matematika', function() {
 
-    user.seedInitialUsers(function() {
-        schools.seedInitialSchools(function() {
-            // absences.seedInitialAbsences('54724fba7d095d5c2d5b17c5', function() {
-            //     marks.seedInitialMarks(function() {
-            //         remarks.seedInitialRemarks(function() {
-            //             return;
-            //         });
-            //     });
-            // });
-        });
-    });
+    //             });
+    //         });
+    //     });
+    // });
+
+    // user.seedInitialUsers(function() {
+    //     school.seedInitialSchools(function() {
+    //         schoolClass.seedInitialSchoolClasses(function() {
+    //             schoolClass.connectInitialUsersToClass(function() {
+    //                 marks.seedInitialMarks('BEL', function() {
+    //                     marks.seedInitialMarks('Matematika', function() {
+
+    //                     });
+    //                 });
+    //             });
+    //         });
+    //     });
+    // });
+
 };
