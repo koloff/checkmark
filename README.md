@@ -1,1 +1,1 @@
-Site for my class!
+Checkmark - Web system for class books!
