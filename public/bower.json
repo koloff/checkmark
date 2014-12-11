@@ -1,28 +1,28 @@
 {
-  "name": "NewClassSite",
-  "version": "0.0.0",
-  "description": "Site for my class",
-  "main": "server.js",
-  "authors": [
-    "Anton Koloff"
-  ],
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "./vendor",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "jquery": "~2.1.1",
-    "angular": "~1.2.26",
-    "angular-resource": "~1.2.26",
-    "angular-route": "~1.2.26",
-    "bootstrap": "~3.2.0",
-    "angular-ui-router": "~0.2.11",
-    "toastr": "~2.0.3",
-    "angular-cookies": "~1.3.0"
-  }
+    "name": "Checkmark",
+    "version": "0.0.0",
+    "description": "Web class book",
+    "main": "server.js",
+    "authors": [
+        "Anton Koloff"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "./vendor",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "jquery": "~2.1.1",
+        "angular": "~1.2.26",
+        "angular-resource": "~1.2.26",
+        "angular-route": "~1.2.26",
+        "bootstrap": "~3.2.0",
+        "angular-ui-router": "~0.2.11",
+        "toastr": "~2.0.3",
+        "angular-cookies": "~1.3.0"
+    }
 }

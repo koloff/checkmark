@@ -14,6 +14,7 @@ classbook.controller('SchoolClassesCtrl', ['$scope', 'identity', 'bulgarianRegio
 
             Resources.SchoolClasses.save(schoolClassToSave, function(response) {
                 if (response.success) {
+                    console.log(response);
                     notifier.success("Класът беше запаметен успешно!");
                     identity.currentUser.schoolClass = response.schoolClass;
                     identity.currentUser.roles.push('admin');

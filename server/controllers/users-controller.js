@@ -11,6 +11,7 @@ module.exports = {
         var newUserData = req.body;
         newUserData.salt = encryption.generateSalt();
         newUserData.hashPassword = encryption.generateHashedPassword(newUserData.password, newUserData.salt);
+        newUserData.roles = [];
 
         var userToSave = new User(newUserData);
 
@@ -24,16 +25,7 @@ module.exports = {
                 if (err.errors) {
                     var errors = err.errors;
 
-                    if (errors.number) {
-                        objToSend.field = 'number';
-
-                        if (errors.number.type === 'user defined') {
-                            objToSend.reason = 'NUMBER_NOT_UNIQUE';
-                        } else {
-                            objToSend.reason = 'ILLEGAL_NUMBER';
-                        }
-
-                    } else if (errors.email) {
+                    if (errors.email) {
                         objToSend.field = 'email';
 
                         if (errors.email.type === 'user defined') {

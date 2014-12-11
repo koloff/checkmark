@@ -17,6 +17,14 @@ classbook.factory('identity', ['$cookieStore',
             isAuthenticated: function() {
                 return !!this.currentUser;
             },
+            hasSchoolClass: function() {
+                return this.isAuthenticated() && this.currentUser.schoolClass;
+            },
+            noSchoolClass: function() {
+                if (this.isAuthenticated() && this.hasSchoolClass() === false) {
+                    return true;
+                }
+            },
             isInRole: function(role) {
                 return this.isAuthenticated() && this.currentUser.roles.indexOf(role) > -1;
             }

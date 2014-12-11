@@ -42,6 +42,15 @@ module.exports = {
         res.end();
     },
 
+    isAuthenticated: function(req, res, next) {
+        if (req.isAuthenticated()) {
+            next();
+        } else {
+            res.status(403);
+            res.end();
+        }
+    },
+
     isInRole: function(role) {
         return function(req, res, next) {
             //console.log(req.user);
@@ -52,6 +61,15 @@ module.exports = {
                 res.end();
             }
         };
+    },
+
+    noSchoolClass: function(req, res, next) {
+        if (!req.user.schoolClass) {
+            next();
+        } else {
+            res.status(403);
+            res.end();
+        }
     },
 
     isInRightClass: function() {

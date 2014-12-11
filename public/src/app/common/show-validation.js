@@ -7,9 +7,7 @@ appModule.directive('showValidation', ['$compile',
             link: function(scope, element, attrs, ctrl) {
                 var input = element.find('input[ng-model]');
                 if (input) {
-                    console.log('input found');
                     scope.$watch(function() {
-                        console.log(input.hasClass('ng-invalid'));
 
                         var isValid;
 

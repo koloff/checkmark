@@ -28,13 +28,26 @@ module.exports = {
 
                 if (err.errors) {
                     objToSend.reason = 'ERROR';
+                    res.send(objToSend);
                 }
             } else {
-                objToSend.schoolClass = schoolClass.id;
-                objToSend.success = true;
+                User.update({
+                        _id: req.user._id
+                    }, {
+                        $push: {
+                            roles: ['admin']
+                        }
+                    },
+                    function(err) {
+                        if (err) {
+                            console.log('unable to set admin role: ' + err);
+                        } else {
+                            objToSend.success = true;
+                            objToSend.schoolClass = schoolClass.id;
+                            res.send(objToSend);
+                        }
+                    });
             }
-
-            res.send(objToSend);
         });
     }
 

@@ -23,34 +23,46 @@ module.exports = {
     updateSubjects: function(req, res) {
         console.log('saving subjects:');
         console.log(req.body);
+        var subjects = req.body;
+        var index = 0;
+        console.log(subjects instanceof Array);
 
-        // function updateSubject(subject) {
+        Marks.remove({
+            schoolClass: req.params.schoolClass
+        }, function(err) {
+            if (err) {
+                console.log("Marks removing err: " + err);
+                return;
+            }
 
-        //     Marks.update({
-        //         schoolClass: req.params.schoolClass
-        //     }, {
-        //         subject: subject
-        //     }, function(err) {
-        //         if (err) {
-        //             res.send({
-        //                 success: false
-        //             });
-        //             console.log("Error updating subjects: " + err);
-        //             return;
-        //         }
+            function saveSubject(newSubject) {
+                Marks.create({
+                    schoolClass: req.params.schoolClass,
+                    subject: newSubject
+                }, function(err, marks) {
+                    if (err) {
+                        res.send({
+                            success: false
+                        });
+                        console.log("Error seeding subjects: " + err);
+                        return;
+                    }
+                    console.log('marks saved: ');
+                    console.log(marks);
 
-        //         index++;
-        //         if (index < req.body.length) {
-        //             updateAbsence(index);
-        //         } else {
-        //             res.send({
-        //                 success: true
-        //             });
-        //         }
-        //     });
-        // }
+                    index++;
+                    if (index < subjects.length) {
+                        saveSubject(subjects[index]);
+                    } else {
+                        res.send({
+                            success: true
+                        });
+                    }
+                });
+            }
 
-        // updateSubject(0);
+            saveSubject(subjects[0]);
+        });
     },
 
     getAllMarks: function(req, res) {

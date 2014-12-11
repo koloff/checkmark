@@ -40,11 +40,11 @@
                                 </div>
                             </div>
 
-                            <ul class="list-group" ng-show="registeredSchool">
+                            <ul class="list-group" ng-show="schoolClass.region && schoolClass.schoolObj">
                                 <li class="list-group-item">
-                                    <h4>Регистрирани класове в {{registeredSchool.abbreviation}} <i>"{{registeredSchool.name}}"</i></h4>
+                                    <h4>Регистрирани класове в {{schoolClass.schoolObj.abbreviation}} <i>"{{schoolClass.schoolObj.name}}"</i></h4>
                                 </li>
-                                <li class="list-group-item" ng-repeat="registeredClass in registeredClasses">
+                                <li class="list-group-item" ng-repeat="registeredClass in registeredClasses | filter:schoolClass.schoolObj._id">
                                    <strong> {{registeredClass.grade}} <sup>{{registeredClass.letter}}</sup> клас</strong>
                                 </li>
                             </ul>
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                     
-                    <button ng-disabled="schoolClassForm.$invalid" ng-click="registerSchoolClass(schoolClass)" class="btn btn-primary center-block" style="width: 100%;">Регистрация</button>
+                    <button ng-disabled="schoolClassForm.$invalid" ng-click="registerSchoolClass(schoolClass)" class="btn btn-primary center-block" style="width: 100%;">Добави</button>
             </fieldset>
         </form>
         </div>

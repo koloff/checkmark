@@ -13,7 +13,7 @@ module.exports = function(app, config) {
         extended: true
     }));
     app.use(session({
-        secret: 'pmg10a',
+        secret: config.sessionSecret,
         resave: true,
         saveUninitialized: true
     }));

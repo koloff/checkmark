@@ -6,6 +6,7 @@ classbook.controller('SchoolsCtrl', ['$scope', 'bulgarianRegions', 'schoolAbbrev
 
         $scope.registerSchool = function(school) {
             Resources.Schools.save(school, function(response) {
+                console.log(response);
                 if (response.success) {
                     notifier.success("Училището беше запаметено успешно!");
                 } else {

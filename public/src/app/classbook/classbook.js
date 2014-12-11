@@ -18,7 +18,7 @@ var classbook = angular
             .state('classbook', {
                 url: '/classbook',
                 templateUrl: 'src/app/classbook/classbook.tpl.html',
-                controller: 'ClassbookAuthCtrl'
+                //controller: 'ClassbookCtrl'
             })
             .state('classbook.login', {
                 url: '/login',
@@ -40,8 +40,7 @@ var classbook = angular
             })
             .state('registerStudent', {
                 url: '/register-student',
-                templateUrl: 'src/app/classbook/register/register-student.tpl.html',
-                controller: 'ClassbookAuthCtrl'
+                templateUrl: 'src/app/classbook/register/register-student.tpl.html'
             })
             .state('registerSchool', {
                 url: '/register-school',

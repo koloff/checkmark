@@ -26,12 +26,13 @@ module.exports = function(config) {
     db.on('error', function(err) {
         console.log('Database error: ' + err);
     });
+    // user.seedInitialUsers(function() {
+    //     school.seedInitialSchools(function() {
+    //         schoolClass.seedInitialSchoolClasses(function() {
+    //             marks.seedInitialMarks('BEL', function() {
+    //                 marks.seedInitialMarks('Matematika', function() {
 
-    // school.seedInitialSchools(function() {
-    //     schoolClass.seedInitialSchoolClasses(function() {
-    //         marks.seedInitialMarks('BEL', function() {
-    //             marks.seedInitialMarks('Matematika', function() {
-
+    //                 });
     //             });
     //         });
     //     });

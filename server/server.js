@@ -9,7 +9,7 @@ var config = require('./config/config.js')[env];
 
 require('./config/express.js')(app, config);
 require('./config/mongoose.js')(config);
-require('./config/passport.js')();
+require('./config/passport.js')(app, config);
 require('./config/routes.js')(app, config);
 
 app.listen(config.PORT);

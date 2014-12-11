@@ -17,8 +17,13 @@ var studentMarksSchema = mongoose.Schema({
 // whole classe's marks for certain subject
 var classMarksSchema = mongoose.Schema({
     schoolClass: mongoose.Schema.ObjectId,
-    subject: String,
-    marks: [studentMarksSchema]
+    subject: {
+        type: String
+    },
+    marks: {
+        type: [studentMarksSchema],
+        sparse: true
+    }
 });
 
 var Marks = mongoose.model('Marks', classMarksSchema);

@@ -11,8 +11,6 @@ module.exports = function(app, config) {
         if (req.user) {
             res.cookie('user', JSON.stringify(req.user.userInfo));
         }
-
-        // res.render(config.rootPath + '/public/src/index.html');
         res.sendFile(config.rootPath + '/public/src/index.html');
     });
 
@@ -20,12 +18,11 @@ module.exports = function(app, config) {
     app.post('/api/users', usersController.createUser);
     app.put('/api/users/:number/roles/', auth.isInRole('admin'), usersController.setRole);
 
-
     app.get('/api/schools', schoolsController.getAllSchools);
-    app.post('/api/schools', schoolsController.registerSchool);
+    app.post('/api/schools', auth.isAuthenticated, auth.noSchoolClass, schoolsController.registerSchool);
 
     app.get('/api/classes', schoolClassesController.getAllSchoolClasses);
-    app.post('/api/classes', schoolClassesController.registerSchoolClass);
+    app.post('/api/classes', auth.isAuthenticated, auth.noSchoolClass, schoolClassesController.registerSchoolClass);
 
     app.get('/api/subjects/:schoolClass/',
         auth.isInRightClass(),

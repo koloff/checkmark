@@ -20,7 +20,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="user in users | orderBy : 'number'">
-                <td><input type="checkbox" class="checkbox" ng-click="setRole(user.number, 'moderator', $event)" ng-checked="user.roles.indexOf('moderator') > -1"></td>
+                <td><input style="margin: 0 auto;" type="checkbox" class="checkbox" ng-click="setRole(user.number, 'moderator', $event)" ng-checked="user.roles.indexOf('moderator') > -1"></td>
                 <td>{{user.number}}</td>
                 <td>{{user.fname}}</td>
                 <td>{{user.lname}}</td>

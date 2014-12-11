@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>Свързване към клас</h1>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-7 col-md-offset-2">
+        <div class="well">
+        <form name="register" class="form-horizontal" novalidate>
+        <legend>Свързване към клас</legend>
+            <fieldset>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            За да се регистрирате като ученик е необходимо да се свържете предварително регистриран клас, като въведете неговия номер.
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            Полетата маркирани с <span style="color: #039; font-size: 1.3em">*</span> са задължителни!
+                        </div>
+                    </div>
+
+
+                    <div class="form-group control-group required" show-validation>
+                        <label for="email" class="col-md-3 control-label">ID на класа:</label>
+                        <div class="col-md-7">
+                            <input 
+                                type="text"
+                                name="classID"
+                                id="classID" 
+                                class="form-control" 
+                                ng-model="student.schoolClass" 
+                                placeholder="номер на класа"
+                                required>
+                                <span class="help-block">уникален идентификационен номер на класа</span>
+                        </div>
+                    </div>
+                    <div class="form-group control-group required">
+                        <label class="col-md-3 control-label" for="number">Номер:</label>
+                        <div class="col-md-3">
+                            <input 
+                                type="text"
+                                name="number" 
+                                id="number" 
+                                class="form-control" 
+                                ng-model="student.number" 
+                                ng-pattern="/^\d{1,2}$/" 
+                                placeholder="№" 
+                                required
+                                autofocus>
+                        </div>
+                        <span class="label label-danger" 
+                        ng-show="signupErr.reason === 'NUMBER_NOT_UNIQUE'">Номерът е зает!</span>
+                    </div>
+                    <button ng-disabled="register.$invalid" ng-click="registerStudent(student)" class="btn btn-primary center-block" style="width: 100%;">Свържи се</button>
+            
+            </fieldset>
+        </form>
+        </div>
+    </div>
+</div>

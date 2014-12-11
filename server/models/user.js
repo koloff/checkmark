@@ -74,13 +74,12 @@ var User = mongoose.model('User', userSchema);
 module.exports = {
 
     seedInitialUsers: function(callback) {
+        console.log("seeding initial users");
         User.find({}, function(err, collection) {
             if (err) {
                 console.log('Cannot find users:' + err);
                 return callback();
             }
-
-            //console.log(collection);
 
             User.remove({}).exec(function() {
                 if (collection.length === 0) {
@@ -98,6 +97,7 @@ module.exports = {
                         hashPassword: hashPass,
                         roles: ['admin']
                     }, function(user, err) {
+                        console.log(err);
                         salt = encryption.generateSalt();
                         hashPass = encryption.generateHashedPassword('Pesho', salt);
                         User.create({
@@ -109,6 +109,7 @@ module.exports = {
                             hashPassword: hashPass,
                             roles: ['moderator']
                         }, function(user, err) {
+                            console.log(err);
                             salt = encryption.generateSalt();
                             hashPass = encryption.generateHashedPassword('Ivan', salt);
                             User.create({
@@ -119,6 +120,7 @@ module.exports = {
                                 salt: salt,
                                 hashPassword: hashPass
                             }, function(user, err) {
+                                console.log(err);
                                 User.find({}, function(users, err) {
                                     console.log(users);
                                 });

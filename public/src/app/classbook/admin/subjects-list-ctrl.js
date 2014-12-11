@@ -30,9 +30,9 @@ classbook.controller('SubjectsListCtrl', ['$scope', 'AdminResources', 'administr
 
             AdminResources.Subjects.update(subjects, function(response) {
                 if (response.success) {
-                    notifier.success("Предметите бяха променени успешно!");
+                    notifier.success("Предметите бяха запазени успешно!");
                 } else {
-                    notifier.error("Предметите не можаха да бъдат променени!");
+                    notifier.error("Предметите не можаха да бъдат запазени!");
                 }
             });
         };
