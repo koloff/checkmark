@@ -1,5 +1,5 @@
-classbook.factory('auth', ['$http', '$q', 'identity', 'Resources', '$cookieStore',
-    function($http, $q, identity, Resources, $cookieStore) {
+classbook.factory('auth', ['$http', '$q', '$state', 'identity', 'Resources', '$cookieStore',
+    function($http, $q, $state, identity, Resources, $cookieStore) {
         return {
 
             signup: function(user) {

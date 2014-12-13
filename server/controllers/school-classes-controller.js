@@ -1,4 +1,5 @@
 var SchoolClass = require('mongoose').model('SchoolClass'),
+    User = require('mongoose').model('User'),
     Sync = require('sync');
 
 module.exports = {
@@ -34,6 +35,9 @@ module.exports = {
                 User.update({
                         _id: req.user._id
                     }, {
+                        $set: {
+                            schoolClass: schoolClass.id
+                        },
                         $push: {
                             roles: ['admin']
                         }

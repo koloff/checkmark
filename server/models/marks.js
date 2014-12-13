@@ -16,14 +16,25 @@ var studentMarksSchema = mongoose.Schema({
 
 // whole classe's marks for certain subject
 var classMarksSchema = mongoose.Schema({
-    schoolClass: mongoose.Schema.ObjectId,
+    schoolClass: {
+        type: mongoose.Schema.ObjectId,
+        index: true
+    },
     subject: {
-        type: String
+        type: String,
+        inde: true
     },
     marks: {
         type: [studentMarksSchema],
         sparse: true
     }
+});
+
+classMarksSchema.index({
+    schoolClass: 1,
+    subject: 1
+}, {
+    unique: true
 });
 
 var Marks = mongoose.model('Marks', classMarksSchema);

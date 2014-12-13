@@ -1,5 +1,5 @@
-classbook.controller('SchoolClassesCtrl', ['$scope', 'identity', 'bulgarianRegions', 'Resources', 'notifier',
-    function($scope, identity, bulgarianRegions, Resources, notifier) {
+classbook.controller('SchoolClassesCtrl', ['$scope', 'identity', '$state', 'bulgarianRegions', 'Resources', 'notifier',
+    function($scope, identity, $state, bulgarianRegions, Resources, notifier) {
         $scope.regions = bulgarianRegions.getRegions();
 
         $scope.registeredSchools = Resources.Schools.query();
@@ -18,6 +18,8 @@ classbook.controller('SchoolClassesCtrl', ['$scope', 'identity', 'bulgarianRegio
                     notifier.success("Класът беше запаметен успешно!");
                     identity.currentUser.schoolClass = response.schoolClass;
                     identity.currentUser.roles.push('admin');
+                    $state.go('admin.subjects');
+
                 } else {
                     notifier.error("Класът не беше запаметен!");
                 }

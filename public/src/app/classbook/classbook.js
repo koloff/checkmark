@@ -52,6 +52,15 @@ var classbook = angular
                 templateUrl: 'src/app/classbook/register/register-class.tpl.html',
                 controller: 'SchoolClassesCtrl'
             })
+            .state('admin', {
+                url: '/classbook/admin',
+                templateUrl: 'src/app/classbook/admin/admin.tpl.html',
+                controller: '',
+                resolve: {
+                    admin: resolveCheck.admin
+                }
+
+            })
             .state('usersList', {
                 url: '/classbook/admin/users',
                 templateUrl: 'src/app/classbook/admin/users-list.tpl.html',

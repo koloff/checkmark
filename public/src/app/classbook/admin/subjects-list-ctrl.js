@@ -32,6 +32,9 @@ classbook.controller('SubjectsListCtrl', ['$scope', 'AdminResources', 'administr
                 if (response.success) {
                     notifier.success("Предметите бяха запазени успешно!");
                 } else {
+                    if (response.reason === 'NOT_UNIQUE') {
+                        notifier.error("Имената на предметите трябва да са уникални!");
+                    }
                     notifier.error("Предметите не можаха да бъдат запазени!");
                 }
             });
