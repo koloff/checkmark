@@ -1,6 +1,11 @@
 var User = require('mongoose').model('User'),
     encryption = require('../utilities/encryption');
 
+
+function seedInitialStudentAbsences() {
+
+}
+
 module.exports = {
 
     createUser: function(req, res) {
@@ -52,8 +57,53 @@ module.exports = {
 
     },
 
+    registerStudent: function(req, res) {
+        var newStudentData = req.body;
+        console.log(newStudentData);
+
+        User.findOne({
+                $and: [{
+                    schoolClass: newStudentData.schoolClass
+                }, {
+                    number: newStudentData.number
+                }]
+            },
+            function(err, user) {
+                if (err) {
+                    console.log('finding user err: ' + err);
+                    return;
+                }
+                console.log(user);
+                if (!user) {
+                    User.update({
+                            _id: req.user._id
+                        }, {
+                            number: newStudentData.number,
+                            schoolClass: newStudentData.schoolClass
+                        },
+                        function(err) {
+                            if (err) {
+                                console.log('unable to register student: ' + err);
+                            } else {
+                                res.send({
+                                    success: true,
+                                    schoolClass: newStudentData.schoolClass
+                                });
+                            }
+                        });
+                } else {
+                    res.send({
+                        success: false,
+                        reason: 'NUMBER_USED'
+                    });
+                }
+            });
+    },
+
     getAllUsers: function(req, res, next) {
-        User.find({}).exec(function(err, collection) {
+        User.find({
+            schoolClass: req.params.schoolClass
+        }).exec(function(err, collection) {
             if (err) {
                 console.log('Users could not be loaded: ' + err);
                 return;
@@ -69,6 +119,7 @@ module.exports = {
         console.log(req.method);
         if (req.body.add === true) {
             User.update({
+                schoolClass: req.params.schoolClass,
                 number: req.params.number
             }, {
                 $push: {

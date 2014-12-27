@@ -21,7 +21,7 @@ classbook.factory('identity', ['$cookieStore',
                 return this.isAuthenticated() && this.currentUser.schoolClass;
             },
             noSchoolClass: function() {
-                if (this.isAuthenticated() && this.hasSchoolClass() === false) {
+            if (this.isAuthenticated() && this.currentUser.schoolClass === undefined) {
                     return true;
                 }
             },

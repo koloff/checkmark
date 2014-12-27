@@ -1,6 +1,11 @@
 var SchoolClass = require('mongoose').model('SchoolClass'),
     User = require('mongoose').model('User'),
-    Sync = require('sync');
+    Sync = require('sync'),
+    absences = require('../models/absences');
+
+function seedSchoolClassData(schoolClass) {
+    Absences.seedSchoolClassAbsences(schoolClass);
+}
 
 module.exports = {
 
@@ -39,13 +44,16 @@ module.exports = {
                             schoolClass: schoolClass.id
                         },
                         $push: {
-                            roles: ['admin']
+                            roles: ['admin', 'moderator']
                         }
                     },
                     function(err) {
                         if (err) {
                             console.log('unable to set admin role: ' + err);
                         } else {
+                            // seeding class data
+                            seedSchoolClassData(schoolClass.id);
+
                             objToSend.success = true;
                             objToSend.schoolClass = schoolClass.id;
                             res.send(objToSend);

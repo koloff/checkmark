@@ -26,6 +26,15 @@ module.exports = function(config) {
     db.on('error', function(err) {
         console.log('Database error: ' + err);
     });
+
+
+    //absences.seedSchoolClassAbsences('5496f40debd379401c0dc27d');
+    //absences.seedUserAbsences('5496f40debd379401c0dc27d', 2);
+
+    //remarks.seedSchoolClassRemarks('5496f40debd379401c0dc27d');
+
+    //marks.addUserMarksForSubj('5496f40debd379401c0dc27d', '3', 1);
+    // marks.addUserMarksForSubj('5496f40debd379401c0dc27d', '3', 5);
     // user.seedInitialUsers(function() {
     //     school.seedInitialSchools(function() {
     //         schoolClass.seedInitialSchoolClasses(function() {

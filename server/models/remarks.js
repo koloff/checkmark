@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 
 // remark (prevod ot angl. ez) - zabelejka
 
-var studentRemarksSchema = mongoose.Schema({
+var studentRemarkSchema = mongoose.Schema({
     number: {
         type: Number,
         required: true,
@@ -13,10 +13,8 @@ var studentRemarksSchema = mongoose.Schema({
         min: 1,
         max: 30
     },
-    remarks: [{
-        date: Date,
-        remark: String
-    }]
+    date: Date,
+    remark: String
 });
 
 
@@ -27,13 +25,29 @@ var classRemarksSchema = mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         unique: true
     },
-    remarks: [studentRemarksSchema]
+    remarks: [studentRemarkSchema]
 });
 
 var Remarks = mongoose.model('Remarks', classRemarksSchema);
 
 
 module.exports = {
+
+    seedSchoolClassRemarks: function(schoolClass) {
+        var newSchoolClassRemarks = new Remarks({
+            schoolClass: schoolClass,
+            remarks: []
+        });
+
+        newSchoolClassRemarks.save(function(err, res) {
+            if (err) {
+                console.log('error seeding class remarks: ' + err);
+                return;
+            }
+
+            console.log('remakrs for class seeded!' + res);
+        });
+    },
 
     seedInitialRemarks: function(schoolClass, callback) {
 

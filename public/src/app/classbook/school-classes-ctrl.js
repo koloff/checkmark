@@ -18,7 +18,7 @@ classbook.controller('SchoolClassesCtrl', ['$scope', 'identity', '$state', 'bulg
                     notifier.success("Класът беше запаметен успешно!");
                     identity.currentUser.schoolClass = response.schoolClass;
                     identity.currentUser.roles.push('admin');
-                    $state.go('admin.subjects');
+                    $state.go('subjectsList');
 
                 } else {
                     notifier.error("Класът не беше запаметен!");

@@ -1,11 +1,11 @@
-classbook.factory('administrator', ['$http', '$q',
-    function($http, $q) {
+classbook.factory('administrator', ['$http', '$q', 'identity',
+    function($http, $q, identity) {
 
         return {
 
             setRole: function(number, role, add) {
                 var deferred = $q.defer();
-                $http.put('/api/users/' + number + '/roles', {
+                $http.put('/api/users/' + identity.currentUser.schoolClass + '/' + number + '/roles', {
                     role: role,
                     add: add
                 }).then(function(success) {

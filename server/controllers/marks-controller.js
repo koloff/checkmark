@@ -83,17 +83,61 @@ module.exports = {
         });
     },
 
-    getAllMarks: function(req, res) {
-        Marks.find({}, function(err, collection) {
+    getClassMarks: function(req, res) {
+        Marks.find({
+            schoolClass: req.params.schoolClass,
+            subject: req.params.subject
+        }, function(err, collection) {
             if (err) {
                 console.log('Could not find marks: ' + err);
                 return;
             }
-
+            console.log(collection);
             res.send(collection);
         });
+    },
+
+    updateMarks: function(req, res) {
+        Sync(function() {
+            console.log(req.body);
+            var marks = req.body;
+            for (var i = 0; i < marks.length; i++) {
+                for (var j = 0, length = marks[i].marks.length; j < length; j++) {
+                    var currentMark = marks[i].marks[j];
+
+                    if (typeof currentMark === 'string' && currentMark !== '') {
+                        marks[i].marks[j] = parseInt(marks[i].marks[j]);
+                    } else if (currentMark !== null && typeof currentMark !== 'number') {
+                        marks[i].marks[j] = null;
+                    }
+
+                }
+            }
+            console.log('marks: ');
+            console.log(marks);
+
+            return marks;
+        }, function(err, marks) {
+            console.log(marks);
+            Marks.update({
+                schoolClass: req.params.schoolClass,
+                subject: req.params.subject
+            }, {
+                marks: marks
+            }, function(err, result) {
+                if (err) {
+                    res.send({
+                        success: false
+                    });
+                    console.log("Error updating marks: " + err);
+                    return;
+                }
+                console.log(result);
+                res.send({
+                    success: true
+                });
+            });
+        });
     }
-
-
 
 };

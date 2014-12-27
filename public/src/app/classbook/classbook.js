@@ -9,6 +9,9 @@ var classbook = angular
             admin: function(auth) {
                 return auth.isAuthorizedFor('admin');
             },
+            moderator: function(auth) {
+                return auth.isAuthorizedFor('moderator');
+            },
             authenticated: function(auth) {
                 return auth.isAuthenticated();
             }
@@ -40,7 +43,8 @@ var classbook = angular
             })
             .state('registerStudent', {
                 url: '/register-student',
-                templateUrl: 'src/app/classbook/register/register-student.tpl.html'
+                templateUrl: 'src/app/classbook/register/register-student.tpl.html',
+                controller: 'StudentsCtrl'
             })
             .state('registerSchool', {
                 url: '/register-school',
@@ -55,7 +59,7 @@ var classbook = angular
             .state('admin', {
                 url: '/classbook/admin',
                 templateUrl: 'src/app/classbook/admin/admin.tpl.html',
-                controller: '',
+                controller: 'AdminCtrl',
                 resolve: {
                     admin: resolveCheck.admin
                 }
@@ -78,12 +82,28 @@ var classbook = angular
                     admin: resolveCheck.admin
                 }
             })
+            .state('editMarks', {
+                url: '/classbook/moderator/marks/:subject',
+                templateUrl: 'src/app/classbook/moderator/edit-marks.tpl.html',
+                controller: 'EditMarksCtrl',
+                resolve: {
+                    moderator: resolveCheck.moderator
+                }
+            })
             .state('absences', {
                 url: '/classbook/moderator/absences',
                 templateUrl: 'src/app/classbook/moderator/absences.tpl.html',
                 controller: 'AbsencesCtrl',
                 resolve: {
-                    admin: resolveCheck.admin
+                    moderator: resolveCheck.moderator
+                }
+            })
+            .state('remark', {
+                url: '/classbook/moderator/remark',
+                templateUrl: 'src/app/classbook/moderator/remarks.tpl.html',
+                controller: 'RemarksCtrl',
+                resolve: {
+                    moderator: resolveCheck.moderator
                 }
             });
     }

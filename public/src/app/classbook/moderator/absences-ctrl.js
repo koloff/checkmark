@@ -1,11 +1,13 @@
-classbook.controller('AbsencesCtrl', ['$scope', 'moderator', 'notifier',
-    function($scope, moderator, notifier) {
-        var absences = moderator.Absences.query().$promise.then(function(absences) {
-            $scope.absences = absences[0];
+classbook.controller('AbsencesCtrl', ['$scope', 'Resources', 'notifier',
+    function($scope, Resources, notifier) {
+        var absences = Resources.Absences.query().$promise.then(function(response) {
+            console.log(response);
+            console.log(response[0].absences);
+            $scope.absences = response[0].absences;
         });
 
         $scope.updateAbsences = function(absences) {
-            moderator.Absences.update(absences, function(response) {
+            Resources.Absences.update(absences, function(response) {
                 if (response.success) {
                     notifier.success("Отсъствията бяха променени успешно!");
                 } else {
@@ -13,7 +15,5 @@ classbook.controller('AbsencesCtrl', ['$scope', 'moderator', 'notifier',
                 }
             });
         };
-
-        console.log($scope.absences);
     }
 ]);

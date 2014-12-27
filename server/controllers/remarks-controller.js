@@ -15,12 +15,15 @@ module.exports = {
     },
 
     addRemark: function(req, res) {
+
+        console.log(req.body);
         var number = req.params.number,
+            schoolClass = req.params.schoolClass,
             remark = req.body.remark,
             date = new Date();
 
         Remarks.update({
-            number: number
+            schoolClass: schoolClass,
         }, {
             $push: {
                 remarks: {

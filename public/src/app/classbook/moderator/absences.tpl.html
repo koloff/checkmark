@@ -19,25 +19,26 @@
                 </tr>
             </thead>
             <tbody>
-
-                <tr ng-repeat="absence in absences.absences | orderBy: 'number'">
-                    <td>{{absence.number}}</td>
-                    <td class="col-md-1">
-                        <div class="form-group" show-validation>
-                            <input class="form-control input-sm" required type="text" ng-model="absence.excused" ng-pattern="/^\d{1,3}$/">
-                        </div>
-                    </td>
-                    <td class="col-md-1">
-                        <div class="form-group" show-validation>
-                             <input class="form-control input-sm" required type="text" ng-model="absence.inexcused" ng-pattern="/(^\d+$)|(^\d+\/\d+$)|(^\d+\s+\d+\/\d+$)/">
-                        </div>  
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <buttonv ng-click="updateAbsences(absences)" class="btn btn-default btn-block">Запази промените</button>
-                    </td>
-                </tr>
+                <form name="absences" novalidate>
+                    <tr ng-repeat="absence in absences | orderBy: 'number'">
+                        <td>{{absence.number}}</td>
+                        <td class="col-md-1">
+                            <div class="form-group" show-validation>
+                                <input class="form-control input-sm" required type="text" ng-model="absence.excused" ng-pattern="/^\d{1,3}$/">
+                            </div>
+                        </td>
+                        <td class="col-md-1">
+                            <div class="form-group" show-validation>
+                                 <input class="form-control input-sm" required type="text" ng-model="absence.inexcused" ng-pattern="/(^\d+$)|(^\d+\/\d+$)|(^\d+\s+\d+\/\d+$)/">
+                            </div>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <button ng-disabled="absences.$invalid" ng-click="updateAbsences(absences)" class="btn btn-default btn-block">Запази промените</button>
+                        </td>
+                    </tr>
+                </form>
             </tbody>
         </table>
     </div>

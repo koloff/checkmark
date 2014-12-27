@@ -17,36 +17,25 @@ module.exports = {
     },
 
     updateAbsences: function(req, res) {
-        console.log(req.body[0]);
+        console.log(req.body);
 
-        function updateAbsence(index) {
-
-            Absences.update({
-                number: index + 1
-            }, {
-                excused: req.body[index].excused,
-                inexcused: req.body[index].inexcused
-            }, function(err) {
-                if (err) {
-                    res.send({
-                        success: false
-                    });
-                    console.log("Error updating absences: " + err);
-                    return;
-                }
-
-                index++;
-                if (index < req.body.length) {
-                    updateAbsence(index);
-                } else {
-                    res.send({
-                        success: true
-                    });
-                }
+        Absences.update({
+            schoolClass: req.params.schoolClass,
+        }, {
+            absences: req.body
+        }, function(err, result) {
+            if (err) {
+                res.send({
+                    success: false
+                });
+                console.log("Error updating absences: " + err);
+                return;
+            }
+            console.log(result);
+            res.send({
+                success: true
             });
-        }
-
-        updateAbsence(0);
+        });
     }
 
 };

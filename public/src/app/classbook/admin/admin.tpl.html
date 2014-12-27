@@ -6,4 +6,29 @@
     </div>
 </div>
 
-<h2 class="text-center bot-margin">Предмети</h2>
+<div class="panel panel-default">
+    <div class="panel-heading">Уникален номер на класа</div>
+    <div class="panel-body text-center">
+        <h3>{{identity.currentUser.schoolClass}}</h3>
+    </div>
+</div>
+
+<div class="well">
+<div class="row">
+    <div class="col-md-3"><a href="#/classbook/admin/users" class="btn btn-primary btn-block">Потребители</a></div>
+    <div class="col-md-3">
+       <div class="btn-group btn-block">
+            <a href="" class="btn btn-success btn-block dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Оценки &nbsp; <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li ng-repeat="subject in subjects">
+                    <a ng-href="#/classbook/moderator/marks/{{subject.subject}}">{{subject.subject}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-3"><a href="#/classbook/moderator/absences" class="btn btn-info btn-block">Отсъствия</a></div>
+    <div class="col-md-3"><a href="#/classbook/moderator/remark" class="btn btn-warning btn-block">Забележки</a></div>
+    </div>
+</div>
