@@ -21,7 +21,7 @@ var classbook = angular
             .state('classbook', {
                 url: '/classbook',
                 templateUrl: 'src/app/classbook/classbook.tpl.html',
-                //controller: 'ClassbookCtrl'
+                controller: 'ClassbookCtrl'
             })
             .state('classbook.login', {
                 url: '/login',
@@ -56,15 +56,6 @@ var classbook = angular
                 templateUrl: 'src/app/classbook/register/register-class.tpl.html',
                 controller: 'SchoolClassesCtrl'
             })
-            .state('admin', {
-                url: '/classbook/admin',
-                templateUrl: 'src/app/classbook/admin/admin.tpl.html',
-                controller: 'AdminCtrl',
-                resolve: {
-                    admin: resolveCheck.admin
-                }
-
-            })
             .state('usersList', {
                 url: '/classbook/admin/users',
                 templateUrl: 'src/app/classbook/admin/users-list.tpl.html',
@@ -80,6 +71,14 @@ var classbook = angular
                 controller: 'SubjectsListCtrl',
                 resolve: {
                     admin: resolveCheck.admin
+                }
+            })
+            .state('moderator', {
+                url: '/classbook/moderator',
+                templateUrl: 'src/app/classbook/moderator/moderator.tpl.html',
+                controller: 'ModeratorCtrl',
+                resolve: {
+                    moderator: resolveCheck.moderator
                 }
             })
             .state('editMarks', {

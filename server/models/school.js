@@ -4,10 +4,6 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User');
 
 var schoolSchema = mongoose.Schema({
-    schoolClass: {
-        type: mongoose.Schema.ObjectId,
-        unique: true
-    },
     region: String,
     abbreviation: String,
     name: {
@@ -22,7 +18,7 @@ var School = mongoose.model('School', schoolSchema);
 
 module.exports = {
 
-    seedInitialSchools: function(callback) {
+    /*seedInitialSchools: function(callback) {
         console.log('seeding schools');
 
         School.find({}, function(err, collection) {
@@ -67,6 +63,6 @@ module.exports = {
                 }
             });
 
-        });
-    }
+        })
+    };*/
 };

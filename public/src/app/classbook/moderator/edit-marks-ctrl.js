@@ -1,6 +1,7 @@
-classbook.controller('EditMarksCtrl', ['$scope', 'Resources', '$stateParams', 'notifier',
-    function($scope, Resources, $stateParams, notifier) {
+classbook.controller('EditMarksCtrl', ['$scope', 'identity', 'Resources', '$stateParams', 'notifier',
+    function($scope, identity, Resources, $stateParams, notifier) {
 
+        var schoolClass = identity.currentUser.schoolClass;
         var marksSubject = $stateParams.subject;
 
         $scope.marksSubject = marksSubject;
@@ -8,6 +9,8 @@ classbook.controller('EditMarksCtrl', ['$scope', 'Resources', '$stateParams', 'n
 
 
         Resources.Marks.query({
+            marksFor: 'class',
+            schoolClass: schoolClass,
             subject: marksSubject
         }).$promise.then(function(response) {
 
@@ -27,6 +30,8 @@ classbook.controller('EditMarksCtrl', ['$scope', 'Resources', '$stateParams', 'n
 
         $scope.updateMarks = function(marks) {
             Resources.Marks.update({
+                marksFor: 'class',
+                schoolClass: schoolClass,
                 subject: marksSubject
             }, marks, function(response) {
                 if (response.success) {

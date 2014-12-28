@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
-    School = mongoose.model('School'),
-    SchoolClass = mongoose.model('SchoolClass'),
+    //School = mongoose.model('School'),
+    // SchoolClass = mongoose.model('SchoolClass'),
     Sync = require('sync'),
     uniqueValidator = require('mongoose-unique-validator');
 
@@ -12,7 +12,8 @@ var studentMarksSchema = mongoose.Schema({
         unique: true,
         match: /^\d{1,2}$/,
         min: 1,
-        max: 30
+        max: 30,
+        sprace: true
     },
     marks: [{
         type: Number,
@@ -51,7 +52,7 @@ var Marks = mongoose.model('Marks', classMarksSchema);
 
 module.exports = {
 
-    addUserMarksForSubj: function(schoolClass, subject, number) {
+    addUserMarksForSubj: function(schoolClass, subject, number, callback) {
         Marks.update({
             schoolClass: schoolClass,
             subject: subject
@@ -59,7 +60,7 @@ module.exports = {
             $push: {
                 marks: {
                     number: number,
-                    marks: []
+                    marks: [null, null, null, null, null, null, null, null, null, null]
                 }
             }
         }, function(err, result) {
@@ -68,7 +69,10 @@ module.exports = {
                 return;
             }
 
-            console.log('marks for user number ' + number + 'added');
+            console.log('subject: ' + subject + ' marks for user number ' + number + ' added');
+
+            if (callback)
+                return callback();
         });
     },
 

@@ -11,7 +11,6 @@
         <form name="register" class="form-horizontal" novalidate>
             <fieldset>
 
-
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <p><span class="label label-warning">ВАЖНО!</span>
@@ -26,11 +25,11 @@
                             </div>
                         </div>
 
-                        <ul class="list-group" ng-show="region">
+                        <ul class="list-group" ng-show="school.region">
                             <li class="list-group-item">
-                                <h4>Регистрирани училища в област {{region}}:</h4>
+                                <h4>Регистрирани училища в област {{school.region}}:</h4>
                             </li>
-                            <li class="list-group-item" ng-repeat="registeredSchool in registeredSchools | filter: region">
+                            <li class="list-group-item" ng-repeat="registeredSchool in registeredSchools | filter: school.region">
                                <strong> {{registeredSchool.abbreviation}} <i>"{{registeredSchool.name}}"</i></strong>
                             </li>
                         </ul>

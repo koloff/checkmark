@@ -1,7 +1,9 @@
 var mongoose = require('mongoose'),
     uniqueValidator = require('mongoose-unique-validator'),
     Sync = require('sync'),
-    encryption = require('../utilities/encryption');
+    encryption = require('../utilities/encryption'),
+    absences = require('./absences'),
+    marks = require('./marks');
 
 var userSchema = mongoose.Schema({
     schoolClass: {
@@ -63,6 +65,7 @@ userSchema
             schoolClass: this.schoolClass,
             number: this.number,
             fname: this.fname,
+            lname: this.lname,
             roles: this.roles
         };
     });
@@ -73,7 +76,7 @@ var User = mongoose.model('User', userSchema);
 
 module.exports = {
 
-    seedInitialUsers: function(callback) {
+    /*seedInitialUsers: function(callback) {
         console.log("seeding initial users");
         User.find({}, function(err, collection) {
             if (err) {
@@ -132,5 +135,5 @@ module.exports = {
                 }
             });
         });
-    }
+    }*/
 };

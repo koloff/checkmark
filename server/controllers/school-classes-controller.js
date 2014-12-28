@@ -1,11 +1,20 @@
 var SchoolClass = require('mongoose').model('SchoolClass'),
     User = require('mongoose').model('User'),
     Sync = require('sync'),
-    absences = require('../models/absences');
+    absences = require('../models/absences'),
+    marks = require('../models/marks'),
+    remarks = require('../models/remarks');
 
-function seedSchoolClassData(schoolClass) {
-    Absences.seedSchoolClassAbsences(schoolClass);
+function seedSchoolClassData(schoolClass, callback) {
+    absences.seedSchoolClassAbsences(schoolClass, function() {
+        remarks.seedSchoolClassRemarks(schoolClass, function() {
+            console.log('Data for class: ' + schoolClass + 'seeded!');
+
+            return callback();
+        });
+    });
 }
+
 
 module.exports = {
 
@@ -43,8 +52,12 @@ module.exports = {
                         $set: {
                             schoolClass: schoolClass.id
                         },
-                        $push: {
-                            roles: ['admin', 'moderator']
+                        $addToSet: {
+                            roles: {
+                                $each: [
+                                    'admin', 'moderator'
+                                ]
+                            }
                         }
                     },
                     function(err) {
@@ -52,11 +65,12 @@ module.exports = {
                             console.log('unable to set admin role: ' + err);
                         } else {
                             // seeding class data
-                            seedSchoolClassData(schoolClass.id);
-
-                            objToSend.success = true;
-                            objToSend.schoolClass = schoolClass.id;
-                            res.send(objToSend);
+                            seedSchoolClassData(schoolClass.id, function() {
+                                // res back
+                                objToSend.success = true;
+                                objToSend.schoolClass = schoolClass.id;
+                                res.send(objToSend);
+                            });
                         }
                     });
             }

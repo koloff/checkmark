@@ -1,12 +1,34 @@
 var User = require('mongoose').model('User'),
-    encryption = require('../utilities/encryption');
+    encryption = require('../utilities/encryption'),
+    absences = require('../models/absences'),
+    Marks = require('mongoose').model('Marks'),
+    marks = require('../models/marks');
 
+function seedInitialStudentData(schoolClass, number, callback) {
+    console.log('seeding user data');
+    Marks.find({
+        schoolClass: schoolClass
+    }, 'subject', function(err, subjects) {
+        if (err) {
+            console.log('Could not find subjects: ' + err);
+            return;
+        }
+        console.log(subjects);
 
-function seedInitialStudentAbsences() {
-
+        absences.seedUserAbsences(schoolClass, number,
+            function() {
+                subjects.forEach(function(subject) {
+                    marks.addUserMarksForSubj(schoolClass, subject.subject, number);
+                });
+                if (callback)
+                    return callback();
+            });
+    });
 }
 
 module.exports = {
+
+    seedInitialStudentData: seedInitialStudentData,
 
     createUser: function(req, res) {
 
@@ -85,9 +107,11 @@ module.exports = {
                             if (err) {
                                 console.log('unable to register student: ' + err);
                             } else {
-                                res.send({
-                                    success: true,
-                                    schoolClass: newStudentData.schoolClass
+                                seedInitialStudentData(newStudentData.schoolClass, newStudentData.number, function() {
+                                    res.send({
+                                        success: true,
+                                        schoolClass: newStudentData.schoolClass
+                                    });
                                 });
                             }
                         });
@@ -122,7 +146,7 @@ module.exports = {
                 schoolClass: req.params.schoolClass,
                 number: req.params.number
             }, {
-                $push: {
+                $addToSet: {
                     'roles': req.body.role
                 }
             }, function(err) {

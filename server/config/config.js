@@ -9,9 +9,9 @@ module.exports = {
         PORT: process.env.PORT || 3377
     },
     production: {
-        sessionSecret: 'checkmarksessionsecret123',
+        sessionSecret: 'sessionsecret1',
         rootPath: rootPath,
-        db: 'mongodb://admin:checkmarkowner@ds063630.mongolab.com:63630/checkmark',
+        db: 'mongodb://admin:adminpass3@ds027521.mongolab.com:27521/checkmark',
         PORT: process.env.PORT || 3377
     }
 };

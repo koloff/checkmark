@@ -16,6 +16,27 @@ module.exports = {
         });
     },
 
+    getStudentAbsences: function(req, res) {
+        console.log('getting student absences');
+        Absences.find({
+            schoolClass: req.params.schoolClass,
+            'absences.number': req.params.number
+        }, {
+            'absences.number.$': 1
+        }, function(err, absences) {
+            if (err) {
+                console.log('Error finding absence: ' + err);
+                return;
+            }
+            if (absences)
+                res.send(absences[0].absences[0]);
+            else
+                res.send({
+                    result: 'NO_ABSENCES'
+                });
+        });
+    },
+
     updateAbsences: function(req, res) {
         console.log(req.body);
 

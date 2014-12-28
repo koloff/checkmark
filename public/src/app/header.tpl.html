@@ -2,7 +2,7 @@
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="#/home" class="navbar-brand">Checkmark</a>
+                ><a href="#/home" class="navbar-brand"><sup style="font-size: 11px;"><i>Alpha 0.1</i> &nbsp;&nbsp; </sup>Checkmark</a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -12,23 +12,24 @@
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                 <ul class="nav navbar-nav">
                     <li ng-class="{active:$state.includes('home')}"><a href="#/home">Начало</a></li>
-                    <li ng-class="{active:$state.includes('about')}"><a href="#/">За проекта</a></li>
-                    <li ng-class="{active:$state.includes('news')}"><a href="#/">Новини</a></li>
+                    <li ng-class="{active:$state.includes('about')}"><a href="#/about">За проекта</a></li>
+                    <li ng-class="{active:$state.includes('news')}"><a href="#/news">Новини</a></li>
                     <li ng-class="{active:$state.includes('')}" ng-show="identity.noSchoolClass()"><a href="#/register-student">Свържи се към клас</a></li>
-                    <li ng-class="{active:$state.includes('')}" ng-show="identity.isAuthenticated()"><a href="#/add-info">Добави</a></li>
+                    <li ng-class="{active:$state.includes('addInfo')}" ng-show="identity.isAuthenticated()"><a href="#/add-info">Добави</a></li>
                     <li ng-class="{active:$state.includes('register')}" ng-show="!identity.isAuthenticated()"><a href="#/register">Регистрация</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-hide="identity.isAuthenticated()" ng-class="{active:$state.includes('classbook')}"><a ui-sref="classbook.login">Вход</a></li>
                     <li ng-show="identity.isAuthenticated()" class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                            {{ identity.currentUser.fname + ' '+ identity.currentUser.lname}} 
+                            {{identity.currentUser.fname + ' '+ identity.currentUser.lname}} 
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="#/classbook">Дневник</a></li>
+                            <li ng-show="identity.isInRole('moderator')"><a href="#/classbook/moderator">Модератор</a></li>
                             <li ng-show="identity.isInRole('admin')"><a href="#/classbook/admin/users">Потребители</a></li>
-                            <li ng-show="identity.isInRole('moderator')"><a href="#/classbook/moderator/absences">Отсъствия</a></li>
+                            <li ng-show="identity.isInRole('admin')"><a href="#/classbook/admin/subjects">Предмети</a></li>
                             <li class="divider"></li>
                             <li><a href="" ng-click="logOut()">Изход </a></li>
                         </ul>

@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
     schoolClass = require('../models/school-class'),
     absences = require('../models/absences'),
     marks = require('../models/marks'),
-    remarks = require('../models/remarks');
+    remarks = require('../models/remarks'),
+    usersController = require('../controllers/users-controller');
 
 
 module.exports = function(config) {
@@ -27,6 +28,7 @@ module.exports = function(config) {
         console.log('Database error: ' + err);
     });
 
+    // usersController.seedInitialStudentData('549ef38ebdb0f5c00a507943', 6);
 
     //absences.seedSchoolClassAbsences('5496f40debd379401c0dc27d');
     //absences.seedUserAbsences('5496f40debd379401c0dc27d', 2);

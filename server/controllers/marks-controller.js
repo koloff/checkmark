@@ -20,6 +20,42 @@ module.exports = {
         });
     },
 
+    getAllStudentMarks: function(req, res) {
+        Marks.find({
+            schoolClass: req.params.schoolClass
+        }, {
+            marks: 'marks',
+            subject: 'subject'
+        }, function(err, collection) {
+            if (err) {
+                console.log('Could not find marks: ' + err);
+                return;
+            }
+
+            Sync(function() {
+                function condition(item) {
+                    return item.number === parseInt(req.params.number);
+                }
+
+                for (var i = 0; i < collection.length; i++) {
+                    collection[i].marks = collection[i].marks.filter(condition);
+                }
+            }, function(err) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                if (collection) {
+                    console.log(collection);
+                    res.send(collection);
+                } else
+                    res.send({
+                        result: 'NO_MARKS'
+                    });
+            });
+        });
+    },
+
     updateSubjects: function(req, res) {
         console.log('saving subjects:');
         console.log(req.body);
@@ -84,6 +120,7 @@ module.exports = {
     },
 
     getClassMarks: function(req, res) {
+        console.log('getting class marks');
         Marks.find({
             schoolClass: req.params.schoolClass,
             subject: req.params.subject

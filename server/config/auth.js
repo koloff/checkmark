@@ -2,10 +2,6 @@ var passport = require('passport');
 
 module.exports = {
 
-    //signup: function(req, res, next) {
-    //    console.log(req.body);
-    //},
-
     login: function(req, res, next) {
         console.log('posting from login:');
         console.log(req.body);
@@ -53,10 +49,11 @@ module.exports = {
 
     isInRole: function(role) {
         return function(req, res, next) {
-            //console.log(req.user);
             if (req.isAuthenticated() && req.params.schoolClass === req.user.schoolClass.toString() && req.user.roles.indexOf(role) > -1) {
+                console.log('auth');
                 next();
             } else {
+                console.log('not-auth');
                 res.status(403);
                 res.end();
             }
@@ -72,14 +69,12 @@ module.exports = {
         }
     },
 
-    isInRightClass: function() {
-        return function(req, res, next) {
-            if (req.isAuthenticated() && req.params.schoolClass === req.user.schoolClass.toString()) {
-                next();
-            } else {
-                res.status(403);
-                res.end();
-            }
-        };
+    isInRightClass: function(req, res, next) {
+        if (req.isAuthenticated() && req.params.schoolClass === req.user.schoolClass.toString()) {
+            next();
+        } else {
+            res.status(403);
+            res.end();
+        }
     }
 };

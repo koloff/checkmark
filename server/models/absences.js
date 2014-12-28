@@ -9,7 +9,8 @@ var studentAbsencesSchema = mongoose.Schema({
         unique: true,
         match: /^\d{1,2}$/,
         min: 1,
-        max: 30
+        max: 30,
+        sprace: true
     },
     excused: {
         type: Number,
@@ -36,7 +37,7 @@ var Absences = mongoose.model('Absences', classAbsencesSchema);
 
 module.exports = {
 
-    seedSchoolClassAbsences: function(schoolClass) {
+    seedSchoolClassAbsences: function(schoolClass, callback) {
         var newSchoolClassAbsences = new Absences({
             schoolClass: schoolClass,
             absences: []
@@ -49,19 +50,12 @@ module.exports = {
             }
 
             console.log('absences for class seeded!' + res);
+
+            return callback();
         });
     },
 
-    seedUserAbsences: function(schoolClass, number) {
-        // Sync(function() {
-        //     var newStudentAbsences = new StudentAbsences({
-        //         number: parseInt(number),
-        //         excused: 0,
-        //         inexcused: '0'
-        //     });
-        //     return newStudentAbsences;
-        // },
-        //  function(newStudentAbsences) {
+    seedUserAbsences: function(schoolClass, number, callback) {
         Absences.update({
             schoolClass: schoolClass,
         }, {
@@ -79,8 +73,9 @@ module.exports = {
             }
             console.log('absences for user seeded:');
             console.log(absence);
+
+            return callback();
         });
-        // });
     }
 
     // seedInitialAbsences: function(schoolClass, callback) {

@@ -1,5 +1,6 @@
 classbook.factory('auth', ['$http', '$q', '$state', 'identity', 'Resources', '$cookieStore',
     function($http, $q, $state, identity, Resources, $cookieStore) {
+
         return {
 
             signup: function(user) {
@@ -24,7 +25,8 @@ classbook.factory('auth', ['$http', '$q', '$state', 'identity', 'Resources', '$c
             },
 
             login: function(user) {
-                console.log('logging');
+                console.log('logging, identity before login:');
+                console.log(identity);
                 var deferred = $q.defer();
 
                 $http.post('/login', user)
@@ -32,6 +34,8 @@ classbook.factory('auth', ['$http', '$q', '$state', 'identity', 'Resources', '$c
                         if (response.success) {
                             identity.currentUser = response.user;
                             deferred.resolve(response);
+                            console.log('identity after login: ');
+                            console.log(identity);
                         } else {
                             deferred.reject(response);
                         }
@@ -44,7 +48,8 @@ classbook.factory('auth', ['$http', '$q', '$state', 'identity', 'Resources', '$c
             },
 
             logout: function() {
-
+                console.log('logout, identity before logout:');
+                console.log(identity);
                 $cookieStore.remove('user');
 
                 var deferred = $q.defer();
@@ -54,6 +59,8 @@ classbook.factory('auth', ['$http', '$q', '$state', 'identity', 'Resources', '$c
                         if (response.success) {
                             identity.currentUser = undefined;
                             deferred.resolve(response);
+                            console.log('identity after logout:');
+                            console.log(identity);
                         } else {
                             deferred.reject(response);
                         }

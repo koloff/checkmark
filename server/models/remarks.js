@@ -11,7 +11,8 @@ var studentRemarkSchema = mongoose.Schema({
         unique: true,
         match: /^\d{1,2}$/,
         min: 1,
-        max: 30
+        max: 30,
+        sprace: true
     },
     date: Date,
     remark: String
@@ -33,7 +34,7 @@ var Remarks = mongoose.model('Remarks', classRemarksSchema);
 
 module.exports = {
 
-    seedSchoolClassRemarks: function(schoolClass) {
+    seedSchoolClassRemarks: function(schoolClass, callback) {
         var newSchoolClassRemarks = new Remarks({
             schoolClass: schoolClass,
             remarks: []
@@ -46,51 +47,53 @@ module.exports = {
             }
 
             console.log('remakrs for class seeded!' + res);
+
+            return callback();
         });
     },
 
-    seedInitialRemarks: function(schoolClass, callback) {
+    /* seedInitialRemarks: function(schoolClass, callback) {
 
-        Remarks.remove({}, function(err) {
-            Remarks.findOne({
-                schoolClass: schoolClass
-            }, function(err, remarks) {
-                if (err) {
-                    console.log('Could not find remarks: ' + err);
-                    return callback();
-                }
+         Remarks.remove({}, function(err) {
+             Remarks.findOne({
+                 schoolClass: schoolClass
+             }, function(err, remarks) {
+                 if (err) {
+                     console.log('Could not find remarks: ' + err);
+                     return callback();
+                 }
 
-                if (!remarks) {
-                    Sync(function() {
-                        var arrToSave = [];
-                        for (var i = 0; i < 25; i++) {
-                            arrToSave[i] = {};
+                 if (!remarks) {
+                     Sync(function() {
+                         var arrToSave = [];
+                         for (var i = 0; i < 25; i++) {
+                             arrToSave[i] = {};
 
-                            numberToCreate = i + 1;
+                             numberToCreate = i + 1;
 
-                            arrToSave[i].number = numberToCreate;
-                            arrToSave[i].remarks = [];
-                        }
+                             arrToSave[i].number = numberToCreate;
+                             arrToSave[i].remarks = [];
+                         }
 
-                        return arrToSave;
-                    }, function(err, result) {
-                        Remarks.create({
-                            schoolClass: schoolClass,
-                            remarks: result
-                        }, function(err) {
-                            if (err) {
-                                console.log('Error seeding remarks: ' + err);
-                                return callback();
-                            }
+                         return arrToSave;
+                     }, function(err, result) {
+                         Remarks.create({
+                             schoolClass: schoolClass,
+                             remarks: result
+                         }, function(err) {
+                             if (err) {
+                                 console.log('Error seeding remarks: ' + err);
+                                 return callback();
+                             }
 
-                            console.log('Remarks seeded!');
-                            return callback();
-                        });
-                    });
-                }
+                             console.log('Remarks seeded!');
+                             return callback();
+                         });
+                     });
+                 }
 
-            });
-        });
-    }
+             });
+         });
+     }*/
 
 };

@@ -7,40 +7,36 @@
 </div>
 
 <div class="row">
+
 <div class="col-md-3">
-<h2 class="text-center bot-margin">Отсъствия</h2>
+    <h2 class="text-center bot-margin">Отсъствия</h2>
 
-<div class="row">
+    <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Извинени</h3>
+                </div>
+                <div class="panel-body text-center">
+                    {{absences.excused}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        
         <div class="col-md-10 col-md-offset-1">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Извинени</h3>
-            </div>
-            <div class="panel-body text-center">
-                21
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    
-    <div class="col-md-10 col-md-offset-1">
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-                <h3 class="panel-title">Неизвинени</h3>
-            </div>
-            <div class="panel-body text-center">
-                3 <sup>2/3</sup>
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Неизвинени</h3>
+                </div>
+                <div class="panel-body text-center">
+                    {{absences.inexcused}}
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-</div>
-
-
-
-
 
 
 <div class="col-md-5">
@@ -53,9 +49,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="marksObj in testMarks track by $index">
-                <td>{{marksObj.name}}</td>
-                <td ng-repeat="mark in marksObj.marks track by $index">
+            <tr ng-repeat="studentMark in studentMarks">
+                <td>{{studentMark.subject}}</td>
+                <td ng-repeat="mark in studentMark.marks[0].marks track by $index">
                     {{mark}}
                 </td>
             </tr>
@@ -67,22 +63,14 @@
     <div class="col-md-4">
     <h2 class="text-center bot-margin">Забележки</h2>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">Дата: 21.11.2014</div>
+        <div ng-repeat="remark in remarks" class="panel panel-default">
+            <div class="panel-heading">Дата: {{remark.date | date}}</div>
             <div class="panel-body">
-              На 02.12.14 г. от 18:00 ще се проведе родителска среща.
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">Дата: 01.10.2014</div>
-            <div class="panel-body">
-                Час за консултация по информатика - от понеделник до петък в 19:30.
+             {{remark.remark}}
             </div>
         </div>
 
     </div>
-
 
 </div>
 

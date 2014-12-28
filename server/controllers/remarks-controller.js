@@ -3,22 +3,40 @@ var Remarks = require('mongoose').model('Remarks'),
 
 module.exports = {
 
-    getAllRemarks: function(req, res) {
-        Remarks.find({}, function(err, collection) {
-            if (err) {
-                console.log('Could not find marks: ' + err);
-                return;
-            }
+    getAllStudentRemarks: function(req, res) {
+        Remarks.findOne({
+                schoolClass: req.params.schoolClass
+            },
+            function(err, collection) {
+                if (err) {
+                    console.log('Could not find marks: ' + err);
+                    return;
+                }
 
-            res.send(collection);
-        });
+                Sync(function() {
+                    var newCollection = [];
+                    collection.remarks.forEach(function(item) {
+                        if (item.number === parseInt(req.params.number)) {
+                            newCollection.push(item);
+                        }
+                    });
+                    return newCollection;
+                }, function(err, newCollection) {
+                    if (newCollection)
+                        res.send(newCollection);
+                    else
+                        res.send({
+                            result: 'NO_REMARKS'
+                        });
+                });
+            });
     },
 
     addRemark: function(req, res) {
 
         console.log(req.body);
-        var number = req.params.number,
-            schoolClass = req.params.schoolClass,
+        var schoolClass = req.params.schoolClass,
+            number = parseInt(req.body.studentNumber),
             remark = req.body.remark,
             date = new Date();
 
@@ -28,6 +46,7 @@ module.exports = {
             $push: {
                 remarks: {
                     date: date,
+                    number: number,
                     remark: remark
                 }
             }

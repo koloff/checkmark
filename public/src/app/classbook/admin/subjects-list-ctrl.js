@@ -1,8 +1,10 @@
-classbook.controller('SubjectsListCtrl', ['$scope', 'AdminResources', 'administrator', 'notifier',
-    function($scope, AdminResources, administrator, notifier) {
+classbook.controller('SubjectsListCtrl', ['$scope', 'identity', 'AdminResources', 'administrator', 'notifier',
+    function($scope, identity, AdminResources, administrator, notifier) {
+
+        var schoolClass = identity.currentUser.schoolClass;
 
         var subjectsNames = [];
-        var subjectsCollection = AdminResources.Subjects.query().$promise.then(function(subjectsCollection) {
+        var subjectsCollection = AdminResources.Subjects.query({schoolClass: schoolClass}).$promise.then(function(subjectsCollection) {
             angular.forEach(subjectsCollection, function(value, key, obj) {
                 subjectsNames.push({
                     subject: value.subject
@@ -28,7 +30,7 @@ classbook.controller('SubjectsListCtrl', ['$scope', 'AdminResources', 'administr
             });
             console.log(subjects);
 
-            AdminResources.Subjects.update(subjects, function(response) {
+            AdminResources.Subjects.update({schoolClass: schoolClass} ,subjects, function(response) {
                 if (response.success) {
                     notifier.success("Предметите бяха запазени успешно!");
                 } else {

@@ -1,7 +1,5 @@
-classbook.factory('Resources', ['$resource', 'identity',
-    function($resource, identity) {
-
-        var schoolClass = identity.currentUser ? identity.currentUser.schoolClass : '';
+classbook.factory('Resources', ['$resource',
+    function($resource) {
 
         var SchoolsClassesResource = $resource('/api/classes/:id', {
             _id: '@id'
@@ -12,7 +10,7 @@ classbook.factory('Resources', ['$resource', 'identity',
         });
 
         var UsersResource = $resource('/api/users/:schoolClass/:id', {
-            schoolClass: schoolClass,
+            schoolClass: '@schoolClass',
             _id: '@id'
         });
 
@@ -21,7 +19,7 @@ classbook.factory('Resources', ['$resource', 'identity',
         });
 
         var AbsencesResource = $resource('/api/absences/:schoolClass/:number', {
-            schoolClass: schoolClass,
+            schoolClass: '@schoolClass',
             number: '@number'
         }, {
             update: {
@@ -29,19 +27,30 @@ classbook.factory('Resources', ['$resource', 'identity',
             }
         });
 
-        var MarksResource = $resource('/api/marks/:schoolClass/:subject/:number', {
-            schoolClass: schoolClass,
+        var MarksResource = $resource('/api/marks/:marksFor/:schoolClass/:subject/:number', {
+            marksFor: '@marksFor',
+            schoolClass: '@schoolClass',
             subject: '@subject',
             number: '@number'
         }, {
             update: {
                 method: 'PUT'
+            },
+            getStudentMarks: {
+                method: 'GET',
+                isArray: true
             }
         });
 
-        var RemarksResource = $resource('/api/remarks/:schoolClass/:number', {
-        schoolClass: schoolClass,
+        var RemarksResource = $resource('/api/remarks/:remarksFor/:schoolClass/:number', {
+            remarksFor: '@remarksFor',
+            schoolClass: '@schoolClass',
             number: '@number'
+        }, {
+            getAllStudentRemarks: {
+                method: 'GET',
+                isArray: true
+            }
         });
 
 

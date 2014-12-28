@@ -46,6 +46,10 @@ body > .container {
     margin-top: 15px;  
 }
 
+.top-margin-big {
+    margin-top: 40px;
+}
+
 .toast-top-center { 
     top: 10%; 
     left: 50%; 

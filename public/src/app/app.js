@@ -1,6 +1,6 @@
 var appModule = angular
 
-.module('app', ['ui.router', 'classbook'])
+    .module('app', ['ui.router', 'classbook'])
 
 .value('toastr', toastr)
 
@@ -11,6 +11,10 @@ var appModule = angular
             .state('home', {
                 url: '/home',
                 templateUrl: 'src/app/templates/home.tpl.html'
+            })
+            .state('about', {
+                url: '/about',
+                templateUrl: 'src/app/templates/about.tpl.html'
             });
     }
 ])
