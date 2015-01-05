@@ -6,7 +6,15 @@ classbook.controller('ClassbookAuthCtrl', ['$scope', '$http', '$state', 'auth', 
             auth.login(user).then(
                 function(success) {
                     notifier.success('Влязохте успешно!');
-                    $state.go('classbook');
+                    if (identity.hasSchoolClass()) {
+                        if (auth.isAuthorizedFor('moderator')) {
+                            $state.go('moderator');
+                        } else {
+                            $state.go('classbook');
+                        }
+                    } else {
+                        $state.go('home');
+                    }
                 },
                 function(error) {
                     notifier.error('Грешен номер/парола!');

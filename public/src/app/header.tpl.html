@@ -15,7 +15,7 @@
                     <li ng-class="{active:$state.includes('about')}"><a href="#/about">За проекта</a></li>
                     <li ng-class="{active:$state.includes('news')}"><a href="#/news">Новини</a></li>
                     <li ng-class="{active:$state.includes('')}" ng-show="identity.noSchoolClass()"><a href="#/register-student">Свържи се към клас</a></li>
-                    <li ng-class="{active:$state.includes('addInfo')}" ng-show="identity.isAuthenticated()"><a href="#/add-info">Добави</a></li>
+                    <li ng-class="{active:$state.includes('addInfo')}" ng-show="identity.isAuthenticated() && !identity.isInRole('admin')"><a href="#/add-info">Добави</a></li>
                     <li ng-class="{active:$state.includes('register')}" ng-show="!identity.isAuthenticated()"><a href="#/register">Регистрация</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -26,7 +26,7 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/classbook">Дневник</a></li>
+                            <li ng-hide="identity.isInRole('admin')"><a href="#/classbook">Дневник</a></li>
                             <li ng-show="identity.isInRole('moderator')"><a href="#/classbook/moderator">Модератор</a></li>
                             <li ng-show="identity.isInRole('admin')"><a href="#/classbook/admin/users">Потребители</a></li>
                             <li ng-show="identity.isInRole('admin')"><a href="#/classbook/admin/subjects">Предмети</a></li>
