@@ -20,7 +20,11 @@ var studentAbsencesSchema = mongoose.Schema({
     inexcused: {
         type: String,
         validate: /(^\d+$)|(^\d+\/\d+$)|(^\d+\s+\d+\/\d+$)/
-    }
+    },
+    allExcused: Number,
+    allInexcused: String,
+    averageExcused: Number,
+    averageInexcused: Number
 });
 
 var classAbsencesSchema = mongoose.Schema({

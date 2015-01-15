@@ -1,5 +1,7 @@
 var Absences = require('mongoose').model('Absences'),
-    Sync = require('sync');
+    Sync = require('sync'),
+    Fraction = require('../utilities/fraction');
+
 
 module.exports = {
 
@@ -41,7 +43,7 @@ module.exports = {
         console.log(req.body);
 
         Absences.update({
-            schoolClass: req.params.schoolClass,
+            schoolClass: req.params.schoolClass
         }, {
             absences: req.body
         }, function(err, result) {
@@ -52,9 +54,39 @@ module.exports = {
                 console.log("Error updating absences: " + err);
                 return;
             }
-            console.log(result);
-            res.send({
-                success: true
+
+            var allExcused = 0,
+                allInexcused = new Fraction(0);
+
+            Sync(function() {
+                for (var studentAbsences in result) {
+                    allExcused += studentAbsences.excused;
+                    allInexcused.add(new Fraction(studentAbsences.inexcused));
+                }
+
+                return {
+                    allExcused: allExcused,
+                    allInexcused: allInexcused.toString()
+                };
+            }, function(err, result) {
+                Absences.update({
+                    schoolClass: req.params.schoolClass
+                }, {
+                    allExcused: result.allExcused,
+                    allInexcused: result.allInexcused
+                }, {
+                    upsert: true
+                }, function(err, result) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+
+                    console.log(result);
+                    res.send({
+                        success: true
+                    });
+                });
             });
         });
     }
